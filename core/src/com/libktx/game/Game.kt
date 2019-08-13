@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.libktx.game.ecs.network.NetworkEventListener
 import com.libktx.game.screen.GameScreen
 import com.libktx.game.screen.LoadingScreen
 import ktx.app.KtxGame
@@ -17,6 +18,8 @@ private val log = logger<Game>()
 
 class Game : KtxGame<KtxScreen>() {
     private val context = Context()
+
+    private var networkEventListener : NetworkEventListener? = null
 
     override fun create() {
         context.register {
@@ -30,11 +33,15 @@ class Game : KtxGame<KtxScreen>() {
             bindSingleton(PooledEngine())
 
             addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject()))
-            addScreen(GameScreen(inject(), inject(), inject(), inject(), inject()))
+            val gameScreen = GameScreen(inject(), inject(), inject(), inject(), inject())
+            networkEventListener = gameScreen
+            addScreen(gameScreen)
         }
         setScreen<LoadingScreen>()
         super.create()
     }
+
+    fun getNetworkEventListener() = networkEventListener
 
     override fun dispose() {
         log.debug { "Entities in engine: ${context.inject<PooledEngine>().entities.size()}" }

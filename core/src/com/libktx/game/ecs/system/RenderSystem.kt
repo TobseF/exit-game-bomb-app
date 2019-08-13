@@ -31,6 +31,7 @@ class RenderSystem(bucket: Entity,
         batch.use {
             super.update(deltaTime)
             font.draw(batch, "Drops Collected: ${bucketCmp.dropsGathered}", 0f, 480f)
+            font.draw(batch, "Data: ${bucketCmp.lastNetworkEvent}", 0f, 280f)
         }
     }
 
