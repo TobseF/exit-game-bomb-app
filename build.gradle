@@ -27,7 +27,6 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.1'
         ktxVersion = '1.9.9-b2'
-        asyncVersion = '2.2.1'
     }
 
     repositories {
@@ -43,12 +42,18 @@ allprojects {
 project(":desktop") {
     apply plugin: "kotlin"
 
+    ext{
+        undertowVersion = '2.0.1.Final'
+    }
 
     dependencies {
         api project(":core")
+        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
         api "com.badlogicgames.gdx:gdx-backend-lwjgl:$gdxVersion"
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+        api "io.undertow:undertow-core:$undertowVersion"
     }
 }
 
@@ -56,9 +61,10 @@ project(":core") {
     apply plugin: "kotlin"
 
     dependencies {
+        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
         api "io.github.libktx:ktx-app:$ktxVersion"
         api "io.github.libktx:ktx-ashley:$ktxVersion"
         api "io.github.libktx:ktx-assets:$ktxVersion"
@@ -73,17 +79,23 @@ project(":android") {
     apply plugin: "android"
     apply plugin: "kotlin-android"
 
+    ext{
+        asyncVersion = '2.2.1'
+    }
+
     configurations { natives }
 
     dependencies {
         api project(":core")
+        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
         api "com.badlogicgames.gdx:gdx-backend-android:$gdxVersion"
-        compile "com.koushikdutta.async:androidasync:$asyncVersion"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-armeabi-v7a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-arm64-v8a"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86"
         natives "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-x86_64"
-        api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+
+        api "com.koushikdutta.async:androidasync:$asyncVersion"
     }
 }

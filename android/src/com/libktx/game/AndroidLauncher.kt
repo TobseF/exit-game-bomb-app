@@ -10,6 +10,6 @@ class AndroidLauncher : AndroidApplication() {
         val config = AndroidApplicationConfiguration()
         val game = Game()
         initialize(game, config)
-        Server(game::getNetworkEventListener).test()
+        Server(game::getNetworkEventListener).start()
     }
 }

@@ -13,6 +13,8 @@ object DesktopLauncher {
             width = 800
             height = 480
         }
-        LwjglApplication(Game(), config).logLevel = Application.LOG_DEBUG
+        val game = Game()
+        LwjglApplication(game, config).logLevel = Application.LOG_DEBUG
+        Server(game::getNetworkEventListener).start()
     }
 }
