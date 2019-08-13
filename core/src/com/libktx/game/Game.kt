@@ -9,8 +9,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.ecs.network.NetworkEventListener
 import com.libktx.game.lib.Countdown
-import com.libktx.game.screen.LoadingScreen
-import com.libktx.game.screen.LoginScreen
+import com.libktx.game.screen.LoadingScreenScreen
+import com.libktx.game.screen.LoginPuzzleScreen
+import com.libktx.game.screen.NumberPuzzleScreen
 import com.libktx.game.screen.SampleGameScreen
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -37,14 +38,15 @@ class Game : KtxGame<KtxScreen>() {
             bindSingleton(OrthographicCamera().apply { setToOrtho(false, 800f, 480f) })
             bindSingleton(PooledEngine())
 
-            addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject()))
-            addScreen(LoginScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
+            addScreen(LoadingScreenScreen(inject(), inject(), inject(), inject(), inject()))
+            addScreen(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
+            addScreen(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
             val gameScreen = SampleGameScreen(inject(), inject(), inject(), inject(), inject())
             networkEventListener = gameScreen
             addScreen(gameScreen)
         }
-        setScreen<LoadingScreen>()
+        setScreen<LoadingScreenScreen>()
         super.create()
     }
 

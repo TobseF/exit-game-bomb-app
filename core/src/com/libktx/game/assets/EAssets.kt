@@ -20,7 +20,8 @@ operator fun AssetManager.get(asset: SoundAssets) = getAsset<Sound>(asset.path)
 // fonts
 enum class FontAssets(val path: String) {
     Counter("fonts/counter.fnt"),
-    ConsolasBig("fonts/consolas_big.fnt")
+    ConsolasBig("fonts/consolas_big.fnt"),
+    NumbersBig("fonts/numbers_big.fnt")
 }
 
 fun AssetManager.load(asset: FontAssets) = load<BitmapFont>(asset.path)
