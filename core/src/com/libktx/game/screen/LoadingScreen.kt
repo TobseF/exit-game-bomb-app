@@ -5,11 +5,13 @@ import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.BitmapFont
+import com.libktx.game.Config
 import com.libktx.game.Game
 import com.libktx.game.assets.MusicAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.TextureAtlasAssets
 import com.libktx.game.assets.load
+import com.libktx.game.ecs.network.Network
 import ktx.app.KtxScreen
 import ktx.graphics.use
 
@@ -24,6 +26,7 @@ class LoadingScreen(private val game: Game,
         TextureAtlasAssets.values().forEach { assets.load(it) }
     }
 
+
     override fun render(delta: Float) {
         // continue loading our assets
         assets.update()
@@ -32,7 +35,8 @@ class LoadingScreen(private val game: Game,
         batch.projectionMatrix = camera.combined
 
         batch.use {
-            font.draw(it, "Welcome to Drop!!! ", 100f, 150f)
+            font.draw(it, "BombApp ", 100f, 200f)
+            font.draw(it, "IP: ${Network.getIpAddress()} Port: ${Config.ServerPort}", 100f, 150f)
             if (assets.isFinished) {
                 font.draw(it, "Tap anywhere to begin!", 100f, 100f)
             } else {
