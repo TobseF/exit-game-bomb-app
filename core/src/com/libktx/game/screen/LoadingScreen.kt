@@ -7,10 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.libktx.game.Config
 import com.libktx.game.Game
-import com.libktx.game.assets.MusicAssets
-import com.libktx.game.assets.SoundAssets
-import com.libktx.game.assets.TextureAtlasAssets
-import com.libktx.game.assets.load
+import com.libktx.game.assets.*
 import com.libktx.game.ecs.network.Network
 import ktx.app.KtxScreen
 import ktx.graphics.use
@@ -24,13 +21,13 @@ class LoadingScreen(private val game: Game,
         MusicAssets.values().forEach { assets.load(it) }
         SoundAssets.values().forEach { assets.load(it) }
         TextureAtlasAssets.values().forEach { assets.load(it) }
+        FontAssets.values().forEach { assets.load(it) }
     }
 
 
     override fun render(delta: Float) {
         // continue loading our assets
         assets.update()
-
         camera.update()
         batch.projectionMatrix = camera.combined
 
@@ -47,7 +44,7 @@ class LoadingScreen(private val game: Game,
         if (Gdx.input.isTouched && assets.isFinished) {
             game.removeScreen<LoadingScreen>()
             dispose()
-            game.setScreen<GameScreen>()
+            game.setScreen<LoginScreen>()
         }
     }
 }

@@ -17,16 +17,19 @@ import com.libktx.game.ecs.component.RenderComponent
 import com.libktx.game.ecs.component.TransformComponent
 import com.libktx.game.ecs.network.NetworkEvent
 import com.libktx.game.ecs.network.NetworkEventListener
-import com.libktx.game.ecs.system.*
+import com.libktx.game.ecs.system.CollisionSystem
+import com.libktx.game.ecs.system.MoveSystem
+import com.libktx.game.ecs.system.RenderSystem
+import com.libktx.game.ecs.system.SpawnSystem
 import ktx.app.KtxScreen
 import ktx.ashley.entity
 import ktx.ashley.get
 
-class GameScreen(private val batch: Batch,
-                 private val font: BitmapFont,
-                 private val assets: AssetManager,
-                 private val camera: OrthographicCamera,
-                 private val engine: PooledEngine) : KtxScreen , NetworkEventListener {
+class SampleGameScreen(private val batch: Batch,
+                       private val font: BitmapFont,
+                       private val assets: AssetManager,
+                       private val camera: OrthographicCamera,
+                       private val engine: PooledEngine) : KtxScreen, NetworkEventListener {
 
 
     override fun receivedNetworkEvent(networkEvent: NetworkEvent) {
