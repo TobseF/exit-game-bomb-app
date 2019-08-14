@@ -44,9 +44,8 @@ class NumberPuzzleScreen(game: Game,
             calculateNewNumbers()
         }
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            game.removeScreen<NumberPuzzleScreen>()
-            dispose()
-            game.setScreen<SampleGameScreen>()
+            hide()
+            game.setScreen<EmptyPuzzleScreen>()
         }
 
     }

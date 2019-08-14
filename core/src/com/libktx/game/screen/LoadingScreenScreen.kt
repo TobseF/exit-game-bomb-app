@@ -42,8 +42,7 @@ class LoadingScreenScreen(private val game: Game,
         }
 
         if (Gdx.input.isTouched && assets.isFinished) {
-            game.removeScreen<LoadingScreenScreen>()
-            dispose()
+            hide()
             game.setScreen<LoginPuzzleScreen>()
         }
     }
