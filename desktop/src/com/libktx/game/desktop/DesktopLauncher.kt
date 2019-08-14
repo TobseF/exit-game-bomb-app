@@ -12,6 +12,7 @@ object DesktopLauncher {
             title = "Bomb"
             width = 800
             height = 480
+            samples = 3
         }
         val game = Game()
         LwjglApplication(game, config).logLevel = Application.LOG_DEBUG

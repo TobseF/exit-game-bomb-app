@@ -3,8 +3,7 @@ package com.libktx.game.screen
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.Input
 import com.badlogic.gdx.assets.AssetManager
-import com.badlogic.gdx.graphics.Color.BLUE
-import com.badlogic.gdx.graphics.Color.WHITE
+import com.badlogic.gdx.graphics.Color.*
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
@@ -15,14 +14,15 @@ import com.libktx.game.assets.get
 import com.libktx.game.ecs.network.NetworkEvent
 import com.libktx.game.ecs.network.NetworkEventListener
 import com.libktx.game.lib.Countdown
+import com.libktx.game.lib.drawWithShadow
 import ktx.graphics.use
 
 class LoginPuzzleScreen(game: Game,
                         batch: Batch,
-                        private val shapeRenderer: ShapeRenderer,
+                        shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
-                        countdown: Countdown) : AbstractPuzzleScreen(game, batch, assets, camera, countdown), NetworkEventListener {
+                        countdown: Countdown) : AbstractPuzzleScreen(game, batch, assets, camera, shapeRenderer, countdown), NetworkEventListener {
 
     override fun receivedNetworkEvent(networkEvent: NetworkEvent) {
     }
@@ -30,15 +30,16 @@ class LoginPuzzleScreen(game: Game,
     override fun render(delta: Float) {
         super.render(delta)
 
-        shapeRenderer.begin(Filled)
-        shapeRenderer.color = BLUE
-        shapeRenderer.circle(280f, 250f, 120f)
-        shapeRenderer.end()
+        shapeRenderer.use(Filled) {
+            it.color = DARK_GRAY
+            it.circle(280f, 250f, 126f, 100)
+            it.color = BLUE
+            it.circle(280f, 250f, 120f, 100)
+        }
 
         batch.use {
             val loginFont = assets[FontAssets.ConsolasBig]
-            loginFont.color = WHITE
-            loginFont.draw(it, "LOGIN", 215f, 260f)
+            loginFont.drawWithShadow(it, WHITE, "LOGIN", 217f, 260f)
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
