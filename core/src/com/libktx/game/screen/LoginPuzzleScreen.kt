@@ -11,10 +11,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Game
 import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.get
-import com.libktx.game.ecs.network.NetworkEvent
-import com.libktx.game.ecs.network.NetworkEventListener
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.drawWithShadow
+import com.libktx.game.puzzle.Puzzle
 import ktx.graphics.use
 
 class LoginPuzzleScreen(game: Game,
@@ -22,10 +21,7 @@ class LoginPuzzleScreen(game: Game,
                         shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
-                        countdown: Countdown) : AbstractPuzzleScreen(game, batch, assets, camera, shapeRenderer, countdown), NetworkEventListener {
-
-    override fun receivedNetworkEvent(networkEvent: NetworkEvent) {
-    }
+                        countdown: Countdown) : AbstractPuzzleScreen(Puzzle.Login, game, batch, assets, camera, shapeRenderer, countdown) {
 
     override fun render(delta: Float) {
         super.render(delta)
@@ -43,10 +39,14 @@ class LoginPuzzleScreen(game: Game,
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            hide()
-            game.setScreen<NumberPuzzleScreen>()
+            switchToNextPuzzle()
         }
 
+    }
+
+    override fun switchToNextPuzzle() {
+        hide()
+        game.setScreen<NumberPuzzleScreen>()
     }
 
     override fun show() {

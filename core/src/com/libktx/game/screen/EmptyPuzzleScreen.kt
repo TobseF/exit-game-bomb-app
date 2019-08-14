@@ -10,10 +10,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.Game
 import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.get
-import com.libktx.game.ecs.network.NetworkEvent
-import com.libktx.game.ecs.network.NetworkEventListener
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.draw
+import com.libktx.game.puzzle.Puzzle
 import ktx.graphics.use
 
 class EmptyPuzzleScreen(game: Game,
@@ -21,10 +20,12 @@ class EmptyPuzzleScreen(game: Game,
                         shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
-                        countdown: Countdown) : AbstractPuzzleScreen(game, batch, assets, camera, shapeRenderer, countdown), NetworkEventListener {
+                        countdown: Countdown) : AbstractPuzzleScreen(Puzzle.NextPuzzle, game, batch, assets, camera, shapeRenderer, countdown) {
 
-    override fun receivedNetworkEvent(networkEvent: NetworkEvent) {
+    override fun switchToNextPuzzle() {
+
     }
+
 
     override fun render(delta: Float) {
         super.render(delta)
