@@ -16,6 +16,6 @@ object DesktopLauncher {
         }
         val game = Game()
         LwjglApplication(game, config).logLevel = Application.LOG_DEBUG
-        Server(game::getNetworkEventListener).start()
+        Server(game).start()
     }
 }

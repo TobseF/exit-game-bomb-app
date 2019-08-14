@@ -22,4 +22,5 @@ class NumbersPuzzle(val state: NumbersPuzzleState) : AbstractPuzzleEndpoint(Puzz
 
     fun getSortedNumbers() = NumbersPuzzleState(state.numbers.sorted()).numbersAsString()
 
+    override fun getPuzzleData(): String = state.numbersAsString()
 }

@@ -1,8 +1,10 @@
 package com.libktx.game.puzzle
 
 import com.libktx.game.ecs.network.NetworkEvent
+import com.libktx.game.ecs.network.NetworkEvent.EventType
 import com.libktx.game.ecs.network.NetworkEventListener
 import com.libktx.game.ecs.network.PuzzleResponse
+import com.libktx.game.ecs.network.ResponseStatus
 import com.libktx.game.screen.AbstractPuzzleScreen
 import ktx.log.logger
 
@@ -12,13 +14,22 @@ class PuzzleManager : NetworkEventListener {
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
         val puzzle = puzzles[event.endpoint]
-        return if (puzzle != null) {
-            val response: PuzzleResponse = puzzle.request(event.data)
-            puzzlesScreens[event.endpoint]?.handlePuzzleResponse(response)
-            response
+        if (puzzle != null) {
+
+            when (event.eventType) {
+                EventType.POST -> {
+                    val response: PuzzleResponse = puzzle.request(event.data)
+                    puzzlesScreens[event.endpoint]?.handlePuzzleResponse(response)
+                    return response
+                }
+                EventType.GET -> {
+                    val response = PuzzleResponse(puzzle.getPuzzleData(), ResponseStatus.OK)
+                    return response
+                }
+            }
         } else {
             log.info { "Failed finding puzzle for endpoint path: ${event.endpoint}" }
-            PuzzleResponse.FALSE
+            return PuzzleResponse.FALSE
         }
     }
 
@@ -27,7 +38,7 @@ class PuzzleManager : NetworkEventListener {
 
 
     fun addPuzzle(puzzle: AbstractPuzzleEndpoint) {
-        puzzles[puzzle.puzze.endpoint] = puzzle
+        puzzles[puzzle.puzzle.endpoint] = puzzle
     }
 
     fun addPuzzleScreen(puzzle: AbstractPuzzleScreen) {

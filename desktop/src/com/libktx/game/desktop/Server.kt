@@ -2,7 +2,10 @@ package com.libktx.game.desktop
 
 import com.libktx.game.Config
 import com.libktx.game.ecs.network.NetworkEvent
+import com.libktx.game.ecs.network.NetworkEvent.EventType.GET
+import com.libktx.game.ecs.network.NetworkEvent.EventType.POST
 import com.libktx.game.ecs.network.NetworkEventListener
+import com.libktx.game.ecs.network.PuzzleResponse
 import com.libktx.game.ecs.network.ResponseHeaderKey
 import io.undertow.Undertow
 import io.undertow.server.HttpHandler
@@ -10,6 +13,7 @@ import io.undertow.server.HttpServerExchange
 import io.undertow.server.handlers.BlockingHandler
 import io.undertow.util.Headers
 import io.undertow.util.HttpString
+import io.undertow.util.Methods
 import ktx.log.logger
 import java.io.BufferedReader
 import java.io.IOException
@@ -18,7 +22,7 @@ import java.io.InputStreamReader
 
 private val log = logger<Server>()
 
-class Server(private val listener: () -> NetworkEventListener) : HttpHandler {
+class Server(private val listener: NetworkEventListener) : HttpHandler {
 
     fun start() {
         val server = Undertow.builder()
@@ -28,7 +32,13 @@ class Server(private val listener: () -> NetworkEventListener) : HttpHandler {
     }
 
     override fun handleRequest(exchange: HttpServerExchange) {
-        val puzzleResponse = listener.invoke().receivedNetworkEvent(NetworkEvent(endpointPath = exchange.relativePath, data = exchange.getBody()))
+        var puzzleResponse = PuzzleResponse.FALSE
+
+        if (Methods.POST == exchange.requestMethod) {
+            puzzleResponse = listener.receivedNetworkEvent(NetworkEvent(endpointPath = exchange.relativePath, eventType = POST, data = exchange.getBody()))
+        } else if (Methods.GET == exchange.requestMethod) {
+            puzzleResponse = listener.receivedNetworkEvent(NetworkEvent(endpointPath = exchange.relativePath, eventType = GET))
+        }
         log.info { "Puzzle Response: $puzzleResponse" }
 
         exchange.responseHeaders.put(Headers.CONTENT_TYPE, "text/plain; charset=utf-8")

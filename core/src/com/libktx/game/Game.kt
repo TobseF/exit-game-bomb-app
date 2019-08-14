@@ -28,13 +28,10 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener {
     val puzzleManager = PuzzleManager()
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
-        puzzleManager.receivedNetworkEvent(event)
-        return PuzzleResponse.OK
+        return puzzleManager.receivedNetworkEvent(event)
     }
 
     private val context = Context()
-
-    private var networkEventListener: NetworkEventListener? = null
 
     override fun create() {
         context.register {
@@ -58,7 +55,6 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener {
             addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(EmptyPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
-            networkEventListener = null
             addScreen(SampleGameScreen(inject(), inject(), inject(), inject(), inject()))
 
             puzzleManager.addPuzzle(LoginPuzzle())
@@ -72,8 +68,6 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener {
         puzzleManager.addPuzzleScreen(puzzleScreen)
         addScreen(puzzleScreen)
     }
-
-    fun getNetworkEventListener() = puzzleManager
 
     override fun dispose() {
         log.debug { "Entities in engine: ${context.inject<PooledEngine>().entities.size()}" }
