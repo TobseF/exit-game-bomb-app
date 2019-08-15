@@ -1,12 +1,12 @@
 package com.libktx.game.desktop
 
 import com.libktx.game.Config
-import com.libktx.game.ecs.network.NetworkEvent
-import com.libktx.game.ecs.network.NetworkEvent.EventType.GET
-import com.libktx.game.ecs.network.NetworkEvent.EventType.POST
-import com.libktx.game.ecs.network.NetworkEventListener
-import com.libktx.game.ecs.network.PuzzleResponse
-import com.libktx.game.ecs.network.ResponseHeaderKey
+import com.libktx.game.network.NetworkEvent
+import com.libktx.game.network.NetworkEvent.EventType.GET
+import com.libktx.game.network.NetworkEvent.EventType.POST
+import com.libktx.game.network.NetworkEventListener
+import com.libktx.game.network.PuzzleResponse
+import com.libktx.game.network.ResponseHeaderKey
 import io.undertow.Undertow
 import io.undertow.server.HttpHandler
 import io.undertow.server.HttpServerExchange

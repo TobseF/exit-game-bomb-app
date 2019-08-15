@@ -1,4 +1,4 @@
-package com.libktx.game.ecs.network
+package com.libktx.game.network
 
 data class PuzzleResponse(val data: String = "", val status: ResponseStatus) {
 

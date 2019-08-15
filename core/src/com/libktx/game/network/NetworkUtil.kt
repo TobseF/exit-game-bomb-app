@@ -1,4 +1,4 @@
-package com.libktx.game.ecs.network
+package com.libktx.game.network
 
 import java.net.DatagramSocket
 import java.net.InetAddress

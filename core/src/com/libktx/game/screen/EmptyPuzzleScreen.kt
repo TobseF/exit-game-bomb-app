@@ -20,9 +20,9 @@ class EmptyPuzzleScreen(game: Game,
                         shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
-                        countdown: Countdown) : AbstractPuzzleScreen(Puzzle.NextPuzzle, game, batch, assets, camera, shapeRenderer, countdown) {
+                        countdown: Countdown) : AbstractPuzzleScreen(Puzzle.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
 
-    override fun switchToNextPuzzle() {
+    override fun switchToNextScreen() {
 
     }
 

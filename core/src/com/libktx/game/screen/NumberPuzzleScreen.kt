@@ -22,7 +22,9 @@ class NumberPuzzleScreen(game: Game,
                          shapeRenderer: ShapeRenderer,
                          assets: AssetManager,
                          camera: OrthographicCamera,
-                         countdown: Countdown, val state: NumbersPuzzleState) : AbstractPuzzleScreen(Puzzle.Numbers, game, batch, assets, camera, shapeRenderer, countdown) {
+                         countdown: Countdown,
+                         val state: NumbersPuzzleState) :
+        AbstractPuzzleScreen(Puzzle.Numbers, game, batch, assets, camera, shapeRenderer, countdown) {
 
     private val timer = Timer(2.5f, state::calculateNewNumbers)
 
@@ -38,15 +40,12 @@ class NumberPuzzleScreen(game: Game,
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
             state.calculateNewNumbers()
         }
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            switchToNextPuzzle()
-        }
-
     }
 
-    override fun switchToNextPuzzle() {
+    override fun switchToNextScreen() {
         hide()
-        game.setScreen<EmptyPuzzleScreen>()
+        countdown.stop()
+        game.setScreen<SuccessScreen>()
     }
 
     override fun show() {

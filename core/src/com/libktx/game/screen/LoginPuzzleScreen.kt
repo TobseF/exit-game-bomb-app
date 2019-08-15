@@ -12,6 +12,7 @@ import com.libktx.game.Game
 import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
+import com.libktx.game.lib.circle
 import com.libktx.game.lib.drawWithShadow
 import com.libktx.game.puzzle.Puzzle
 import ktx.graphics.use
@@ -21,16 +22,15 @@ class LoginPuzzleScreen(game: Game,
                         shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
-                        countdown: Countdown) : AbstractPuzzleScreen(Puzzle.Login, game, batch, assets, camera, shapeRenderer, countdown) {
+                        countdown: Countdown) :
+        AbstractPuzzleScreen(Puzzle.Connect, game, batch, assets, camera, shapeRenderer, countdown) {
 
     override fun render(delta: Float) {
         super.render(delta)
 
         shapeRenderer.use(Filled) {
-            it.color = DARK_GRAY
-            it.circle(280f, 250f, 126f, 100)
-            it.color = BLUE
-            it.circle(280f, 250f, 120f, 100)
+            it.circle(DARK_GRAY, 280f, 250f, 126f)
+            it.circle(BLUE, 280f, 250f, 120f)
         }
 
         batch.use {
@@ -39,12 +39,12 @@ class LoginPuzzleScreen(game: Game,
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            switchToNextPuzzle()
+            switchToNextScreen()
         }
 
     }
 
-    override fun switchToNextPuzzle() {
+    override fun switchToNextScreen() {
         hide()
         game.setScreen<NumberPuzzleScreen>()
     }

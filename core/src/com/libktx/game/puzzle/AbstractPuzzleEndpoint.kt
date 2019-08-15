@@ -1,7 +1,7 @@
 package com.libktx.game.puzzle
 
-import com.libktx.game.ecs.network.NetworkDataProvider
-import com.libktx.game.ecs.network.PuzzleResponse
+import com.libktx.game.network.NetworkDataProvider
+import com.libktx.game.network.PuzzleResponse
 
 abstract class AbstractPuzzleEndpoint(val puzzle: Puzzle) : NetworkDataProvider {
 

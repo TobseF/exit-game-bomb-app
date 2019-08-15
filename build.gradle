@@ -27,6 +27,7 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.1'
         ktxVersion = '1.9.9-b2'
+        kotlinTestVersion = '5:3.3.2'
     }
 
     repositories {
@@ -72,6 +73,8 @@ project(":core") {
         api "io.github.libktx:ktx-graphics:$ktxVersion"
         api "io.github.libktx:ktx-inject:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
+
+        //testImplementation  "io.kotlintest:kotlintest-runner-junit$kotlinTestVersion"
     }
 }
 

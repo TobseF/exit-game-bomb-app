@@ -7,10 +7,10 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
-import com.libktx.game.ecs.network.NetworkEvent
-import com.libktx.game.ecs.network.NetworkEventListener
-import com.libktx.game.ecs.network.PuzzleResponse
 import com.libktx.game.lib.Countdown
+import com.libktx.game.network.NetworkEvent
+import com.libktx.game.network.NetworkEventListener
+import com.libktx.game.network.PuzzleResponse
 import com.libktx.game.puzzle.LoginPuzzle
 import com.libktx.game.puzzle.NumbersPuzzle
 import com.libktx.game.puzzle.NumbersPuzzleState
@@ -25,7 +25,7 @@ private val log = logger<Game>()
 
 class Game : KtxGame<KtxScreen>(), NetworkEventListener {
 
-    val puzzleManager = PuzzleManager()
+    private val puzzleManager = PuzzleManager()
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
         return puzzleManager.receivedNetworkEvent(event)
@@ -40,7 +40,7 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener {
             bindSingleton(BitmapFont())
             bindSingleton(AssetManager())
             bindSingleton(ShapeRenderer())
-            bindSingleton(Countdown(minutes = 20))
+            bindSingleton(Countdown(minutes = Config.countdownTime))
 
             bindSingleton(NumbersPuzzleState())
 
@@ -49,18 +49,19 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener {
             bindSingleton(OrthographicCamera().apply { setToOrtho(false, 800f, 480f) })
             bindSingleton(PooledEngine())
 
-            addScreen(LoadingScreenScreen(inject(), inject(), inject(), inject(), inject()))
+            addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject()))
 
             addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(EmptyPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
-            addScreen(SampleGameScreen(inject(), inject(), inject(), inject(), inject()))
+            addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject()))
+            addScreen(SuccessScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
             puzzleManager.addPuzzle(LoginPuzzle())
             puzzleManager.addPuzzle(NumbersPuzzle(inject()))
         }
-        setScreen<LoadingScreenScreen>()
+        setScreen<LoadingScreen>()
         super.create()
     }
 

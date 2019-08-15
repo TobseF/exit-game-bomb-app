@@ -1,7 +1,7 @@
 package com.libktx.game.puzzle
 
-import com.libktx.game.ecs.network.PuzzleResponse
-import com.libktx.game.ecs.network.ResponseStatus
+import com.libktx.game.network.PuzzleResponse
+import com.libktx.game.network.ResponseStatus
 
 /**
  * The player must provide a string with all current numbers, sorted in the correct way. Each number has 4 digits, they are sorted ascending.

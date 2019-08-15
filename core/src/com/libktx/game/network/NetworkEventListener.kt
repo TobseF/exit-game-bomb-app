@@ -1,4 +1,4 @@
-package com.libktx.game.ecs.network
+package com.libktx.game.network
 
 interface NetworkEventListener {
     fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse

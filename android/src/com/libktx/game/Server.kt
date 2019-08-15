@@ -2,11 +2,11 @@ package com.libktx.game
 
 import com.koushikdutta.async.http.server.AsyncHttpServer
 import com.koushikdutta.async.http.server.AsyncHttpServerRequest
-import com.libktx.game.ecs.network.NetworkEvent
-import com.libktx.game.ecs.network.NetworkEvent.EventType.GET
-import com.libktx.game.ecs.network.NetworkEvent.EventType.POST
-import com.libktx.game.ecs.network.NetworkEventListener
-import com.libktx.game.ecs.network.ResponseHeaderKey
+import com.libktx.game.network.NetworkEvent
+import com.libktx.game.network.NetworkEvent.EventType.GET
+import com.libktx.game.network.NetworkEvent.EventType.POST
+import com.libktx.game.network.NetworkEventListener
+import com.libktx.game.network.ResponseHeaderKey
 import ktx.log.logger
 
 private val log = logger<Server>()
