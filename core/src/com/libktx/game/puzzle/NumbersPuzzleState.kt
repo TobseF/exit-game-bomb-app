@@ -24,7 +24,7 @@ class NumbersPuzzleState(var numbers: List<Int> = generateRandomNumbers()) {
             return numbers
         }
 
-        private fun randomNumber() = Random.nextInt(100, 9999)
+        private fun randomNumber() = Random.nextInt(1000, 9042)
     }
 
 }
