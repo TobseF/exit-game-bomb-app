@@ -61,6 +61,10 @@ project(":desktop") {
 project(":core") {
     apply plugin: "kotlin"
 
+    test {
+        useJUnitPlatform()
+    }
+
     dependencies {
         api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
 
@@ -74,7 +78,7 @@ project(":core") {
         api "io.github.libktx:ktx-inject:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
 
-        //testImplementation  "io.kotlintest:kotlintest-runner-junit$kotlinTestVersion"
+        testImplementation  "io.kotlintest:kotlintest-runner-junit$kotlinTestVersion"
     }
 }
 
