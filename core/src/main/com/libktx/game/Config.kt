@@ -5,5 +5,5 @@ object Config {
     /**
      * Time in minutes of a game
      */
-    const val countdownTime = 1
+    const val countdownTime = 20
 }

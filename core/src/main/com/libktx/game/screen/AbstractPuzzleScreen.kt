@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Game
 import com.libktx.game.assets.FontAssets
+import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.TimerFormatter
@@ -31,9 +32,12 @@ abstract class AbstractPuzzleScreen(val puzzle: Puzzle, protected val game: Game
                                     shapeRenderer: ShapeRenderer,
                                     val countdown: Countdown) : AbstractScreen(batch, assets, camera, shapeRenderer) {
 
-    fun handlePuzzleResponse(response: PuzzleResponse) {
+    open fun handlePuzzleResponse(response: PuzzleResponse) {
         if (response.status == ResponseStatus.OK) {
+            assets[SoundAssets.MessageRight].play()
             switchToNextScreen()
+        } else {
+            assets[SoundAssets.MessageWrong].play()
         }
     }
 
