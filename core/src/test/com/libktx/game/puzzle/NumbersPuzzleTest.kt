@@ -1,6 +1,6 @@
 package com.libktx.game.puzzle
 
-/*
+
 import io.kotlintest.shouldBe
 import io.kotlintest.specs.FunSpec
 
@@ -18,4 +18,3 @@ internal class NumbersPuzzleTest : FunSpec({
     }
 
 })
-*/
