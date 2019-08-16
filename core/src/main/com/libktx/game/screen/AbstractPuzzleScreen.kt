@@ -17,22 +17,23 @@ import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.TimerFormatter
 import com.libktx.game.lib.drawWithShadow
 import com.libktx.game.lib.rect
+import com.libktx.game.network.Endpoint
 import com.libktx.game.network.PuzzleResponse
 import com.libktx.game.network.ResponseStatus
-import com.libktx.game.puzzle.Puzzle
+import com.libktx.game.puzzle.PuzzleResponseHandler
 import ktx.graphics.use
 
 /**
  * Renders a timer.
  */
-abstract class AbstractPuzzleScreen(val puzzle: Puzzle, protected val game: Game,
+abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: Game,
                                     batch: Batch,
                                     assets: AssetManager,
                                     camera: OrthographicCamera,
                                     shapeRenderer: ShapeRenderer,
-                                    val countdown: Countdown) : AbstractScreen(batch, assets, camera, shapeRenderer) {
+                                    val countdown: Countdown) : AbstractScreen(batch, assets, camera, shapeRenderer), PuzzleResponseHandler {
 
-    open fun handlePuzzleResponse(response: PuzzleResponse) {
+    override fun handlePuzzleResponse(response: PuzzleResponse) {
         if (response.status == ResponseStatus.OK) {
             assets[SoundAssets.MessageRight].play()
             switchToNextScreen()

@@ -4,6 +4,21 @@ import kotlin.random.Random
 
 class NumbersPuzzleState(var numbers: List<Int> = generateRandomNumbers()) {
 
+    companion object {
+
+        private const val numbersCount = 3 * 6
+
+        private fun generateRandomNumbers(): ArrayList<Int> {
+            val numbers = arrayListOf<Int>()
+            for (i in 0 until numbersCount) {
+                numbers.add(nextRandomNumber())
+            }
+            return numbers
+        }
+
+        private fun nextRandomNumber() = Random.nextInt(1000, 9042)
+    }
+
     fun calculateNewNumbers() {
         numbers = generateRandomNumbers()
     }
@@ -13,18 +28,5 @@ class NumbersPuzzleState(var numbers: List<Int> = generateRandomNumbers()) {
     }
 
     private fun Int.asFourDigits() = String.format("%04d", this)
-
-    companion object {
-        private fun generateRandomNumbers(): ArrayList<Int> {
-            val numbersCount = 3 * 6
-            val numbers = arrayListOf<Int>()
-            for (i in 0 until numbersCount) {
-                numbers.add(randomNumber())
-            }
-            return numbers
-        }
-
-        private fun randomNumber() = Random.nextInt(1000, 9042)
-    }
 
 }

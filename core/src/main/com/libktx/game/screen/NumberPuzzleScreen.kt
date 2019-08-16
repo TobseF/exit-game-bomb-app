@@ -13,8 +13,8 @@ import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.Timer
 import com.libktx.game.lib.drawWrapped
+import com.libktx.game.network.Endpoint
 import com.libktx.game.puzzle.NumbersPuzzleState
-import com.libktx.game.puzzle.Puzzle
 import ktx.graphics.use
 
 class NumberPuzzleScreen(game: Game,
@@ -24,7 +24,7 @@ class NumberPuzzleScreen(game: Game,
                          camera: OrthographicCamera,
                          countdown: Countdown,
                          val state: NumbersPuzzleState) :
-        AbstractPuzzleScreen(Puzzle.Numbers, game, batch, assets, camera, shapeRenderer, countdown) {
+        AbstractPuzzleScreen(Endpoint.Numbers, game, batch, assets, camera, shapeRenderer, countdown) {
 
     private val timer = Timer(2.5f, state::calculateNewNumbers)
 

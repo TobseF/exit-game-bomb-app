@@ -8,13 +8,15 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.lib.Countdown
+import com.libktx.game.lib.Resetable
 import com.libktx.game.network.NetworkEvent
 import com.libktx.game.network.NetworkEventListener
+import com.libktx.game.network.NetworkEventManager
 import com.libktx.game.network.PuzzleResponse
 import com.libktx.game.puzzle.LoginPuzzle
 import com.libktx.game.puzzle.NumbersPuzzle
 import com.libktx.game.puzzle.NumbersPuzzleState
-import com.libktx.game.puzzle.PuzzleManager
+import com.libktx.game.puzzle.ResetPuzzle
 import com.libktx.game.screen.*
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -23,9 +25,9 @@ import ktx.log.logger
 
 private val log = logger<Game>()
 
-class Game : KtxGame<KtxScreen>(), NetworkEventListener {
+class Game : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
 
-    private val puzzleManager = PuzzleManager()
+    private val puzzleManager = NetworkEventManager()
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
         return puzzleManager.receivedNetworkEvent(event)
@@ -60,9 +62,15 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener {
 
             puzzleManager.addPuzzle(LoginPuzzle())
             puzzleManager.addPuzzle(NumbersPuzzle(inject()))
+            puzzleManager.addPuzzle(ResetPuzzle(inject(), inject<Countdown>()))
         }
         setScreen<LoadingScreen>()
+
         super.create()
+    }
+
+    override fun reset() {
+        setScreen<LoginPuzzleScreen>()
     }
 
     private inline fun <reified Type : AbstractPuzzleScreen> addPuzzle(puzzleScreen: Type) {

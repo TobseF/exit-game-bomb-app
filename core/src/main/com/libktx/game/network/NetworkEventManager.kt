@@ -1,16 +1,16 @@
-package com.libktx.game.puzzle
+package com.libktx.game.network
 
-import com.libktx.game.network.NetworkEvent
 import com.libktx.game.network.NetworkEvent.EventType
-import com.libktx.game.network.NetworkEventListener
-import com.libktx.game.network.PuzzleResponse
-import com.libktx.game.network.ResponseStatus
+import com.libktx.game.puzzle.PuzzleResponseHandler
 import com.libktx.game.screen.AbstractPuzzleScreen
 import ktx.log.logger
 
-private val log = logger<PuzzleManager>()
+private val log = logger<NetworkEventManager>()
 
-class PuzzleManager : NetworkEventListener {
+class NetworkEventManager : NetworkEventListener {
+
+    private val puzzles: MutableMap<String, AbstractNetworkEndpoint> = mutableMapOf()
+    private val puzzlesScreens: MutableMap<String, PuzzleResponseHandler> = mutableMapOf()
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
         val puzzle = puzzles[event.endpoint]
@@ -23,8 +23,7 @@ class PuzzleManager : NetworkEventListener {
                     return response
                 }
                 EventType.GET -> {
-                    val response = PuzzleResponse(puzzle.getPuzzleData(), ResponseStatus.OK)
-                    return response
+                    return PuzzleResponse(puzzle.getPuzzleData(), ResponseStatus.OK)
                 }
             }
         } else {
@@ -33,16 +32,12 @@ class PuzzleManager : NetworkEventListener {
         }
     }
 
-    private val puzzles: MutableMap<String, AbstractPuzzleEndpoint> = mutableMapOf()
-    private val puzzlesScreens: MutableMap<String, AbstractPuzzleScreen> = mutableMapOf()
-
-
-    fun addPuzzle(puzzle: AbstractPuzzleEndpoint) {
-        puzzles[puzzle.puzzle.endpoint] = puzzle
+    fun addPuzzle(endpoint: AbstractNetworkEndpoint) {
+        puzzles[endpoint.name] = endpoint
     }
 
     fun addPuzzleScreen(puzzle: AbstractPuzzleScreen) {
-        puzzlesScreens[puzzle.puzzle.endpoint] = puzzle
+        puzzlesScreens[puzzle.endpoint.path] = puzzle
     }
 
 }

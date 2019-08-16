@@ -12,7 +12,7 @@ import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.draw
-import com.libktx.game.puzzle.Puzzle
+import com.libktx.game.network.Endpoint
 import ktx.graphics.use
 
 class EmptyPuzzleScreen(game: Game,
@@ -20,7 +20,7 @@ class EmptyPuzzleScreen(game: Game,
                         shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
-                        countdown: Countdown) : AbstractPuzzleScreen(Puzzle.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
+                        countdown: Countdown) : AbstractPuzzleScreen(Endpoint.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
 
     override fun switchToNextScreen() {
 

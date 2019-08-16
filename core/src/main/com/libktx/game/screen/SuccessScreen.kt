@@ -10,7 +10,7 @@ import com.libktx.game.Game
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
-import com.libktx.game.puzzle.Puzzle
+import com.libktx.game.network.Endpoint
 import ktx.graphics.use
 
 class SuccessScreen(game: Game,
@@ -19,7 +19,7 @@ class SuccessScreen(game: Game,
                     assets: AssetManager,
                     camera: OrthographicCamera,
                     countdown: Countdown) :
-        AbstractPuzzleScreen(Puzzle.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
+        AbstractPuzzleScreen(Endpoint.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
 
     override fun switchToNextScreen() {
         // This is the end

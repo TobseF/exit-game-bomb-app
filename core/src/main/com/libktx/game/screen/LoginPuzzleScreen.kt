@@ -14,7 +14,7 @@ import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.circle
 import com.libktx.game.lib.drawWithShadow
-import com.libktx.game.puzzle.Puzzle
+import com.libktx.game.network.Endpoint
 import ktx.graphics.use
 
 class LoginPuzzleScreen(game: Game,
@@ -23,7 +23,7 @@ class LoginPuzzleScreen(game: Game,
                         assets: AssetManager,
                         camera: OrthographicCamera,
                         countdown: Countdown) :
-        AbstractPuzzleScreen(Puzzle.Connect, game, batch, assets, camera, shapeRenderer, countdown) {
+        AbstractPuzzleScreen(Endpoint.Connect, game, batch, assets, camera, shapeRenderer, countdown) {
 
     override fun render(delta: Float) {
         super.render(delta)

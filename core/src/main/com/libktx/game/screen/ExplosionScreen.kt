@@ -11,7 +11,7 @@ import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.rect
-import com.libktx.game.puzzle.Puzzle
+import com.libktx.game.network.Endpoint
 import ktx.graphics.use
 
 class ExplosionScreen(game: Game,
@@ -19,7 +19,7 @@ class ExplosionScreen(game: Game,
                       shapeRenderer: ShapeRenderer,
                       assets: AssetManager,
                       camera: OrthographicCamera,
-                      countdown: Countdown) : AbstractPuzzleScreen(Puzzle.GameOver, game, batch, assets, camera, shapeRenderer, countdown) {
+                      countdown: Countdown) : AbstractPuzzleScreen(Endpoint.GameOver, game, batch, assets, camera, shapeRenderer, countdown) {
 
 
     override fun switchToNextScreen() {

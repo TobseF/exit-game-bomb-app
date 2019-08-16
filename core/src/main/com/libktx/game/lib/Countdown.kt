@@ -1,22 +1,18 @@
 package com.libktx.game.lib
 
-class Countdown(private val minutes: Int, private val seconds: Int = 0) {
+import kotlin.math.max
+
+class Countdown(private val minutes: Int, private val seconds: Int = 0) : Resetable {
 
     private var finish = getEndTime()
     private var stoppedTime: Long? = null
-
 
     fun getTime(): ms {
         if (stoppedTime != null) {
             return stoppedTime!!
         }
-
         val current = finish - System.currentTimeMillis()
-        return if (current <= 0) {
-            0L
-        } else {
-            current
-        }
+        return max(current, 0)
     }
 
     private fun getEndTime() = System.currentTimeMillis() + (minutes * 60 + seconds) * 1000
@@ -27,8 +23,9 @@ class Countdown(private val minutes: Int, private val seconds: Int = 0) {
         stoppedTime = getTime()
     }
 
-    fun reset() {
+    override fun reset() {
         finish = getEndTime()
+        stoppedTime = null
     }
 
 }
