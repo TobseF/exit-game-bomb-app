@@ -2,7 +2,7 @@ package com.libktx.game.lib
 
 import kotlin.math.max
 
-class Countdown(private val minutes: Int, private val seconds: Int = 0) : Resetable {
+class Countdown(private val minutes: Int = 0, private val seconds: Int = 0) : Resetable {
 
     private var finish = getEndTime()
     private var stoppedTime: Long? = null

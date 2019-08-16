@@ -1,6 +1,9 @@
 package com.libktx.game.lib
 
-class Timer(var actionTime: Float, val timerAction: () -> Unit) : Time {
+/**
+ * @param actionTime seconds before the action will be triggered
+ */
+class Timer(var actionTime: Float, private val timerAction: (() -> Unit)?) : Time {
 
     override var time = 0F
     private var pause = false
@@ -9,7 +12,7 @@ class Timer(var actionTime: Float, val timerAction: () -> Unit) : Time {
         time += deltaTime
         if (!pause && time >= actionTime) {
             time = 0F
-            timerAction.invoke()
+            timerAction?.invoke()
         }
     }
 

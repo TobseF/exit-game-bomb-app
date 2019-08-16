@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.Resetable
+import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.network.NetworkEvent
 import com.libktx.game.network.NetworkEventListener
 import com.libktx.game.network.NetworkEventManager
@@ -25,7 +26,7 @@ import ktx.log.logger
 
 private val log = logger<Game>()
 
-class Game : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
+class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
 
     private val puzzleManager = NetworkEventManager()
 
@@ -45,6 +46,10 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
             bindSingleton(Countdown(minutes = Config.countdownTime))
 
             bindSingleton(NumbersPuzzleState())
+            bindSingleton(LoginPuzzleState())
+            if (lightSensor != null) {
+                bindSingleton(lightSensor)
+            }
 
             // The camera ensures we can render using our target resolution of 800x480
             // pixels no matter what the screen resolution is.
@@ -53,7 +58,7 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
 
             addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
-            addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
+            addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(EmptyPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
