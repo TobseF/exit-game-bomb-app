@@ -1,7 +1,7 @@
 package com.libktx.game.screen
 
 import com.badlogic.gdx.Gdx
-import com.badlogic.gdx.Input
+import com.badlogic.gdx.Input.Keys.SPACE
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.Color.RED
@@ -53,7 +53,7 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
     }
 
     private fun checkInput() {
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+        if (Gdx.input.isKeyJustPressed(SPACE)) {
             switchToNextScreen()
         }
     }
@@ -84,7 +84,7 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
 
     }
 
-    private fun getTimeAsString() = TimerFormatter.getFormattedTimeAsString(countdown.getTime())
+    private fun getTimeAsString() = TimerFormatter.getFormattedTimeAsString(countdown.getContdownTime())
 
     override fun show() {
     }

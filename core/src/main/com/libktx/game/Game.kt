@@ -51,7 +51,7 @@ class Game : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
             bindSingleton(OrthographicCamera().apply { setToOrtho(false, 800f, 480f) })
             bindSingleton(PooledEngine())
 
-            addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject()))
+            addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
             addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))

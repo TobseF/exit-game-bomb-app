@@ -22,8 +22,10 @@ class SuccessScreen(game: Game,
         AbstractPuzzleScreen(Endpoint.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
 
     override fun switchToNextScreen() {
-        // This is the end
+        hide()
+        game.setScreen<ExplosionScreen>()
     }
+
 
     override fun checkCountdown() {
         // We already exploded

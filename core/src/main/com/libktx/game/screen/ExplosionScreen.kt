@@ -7,12 +7,15 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Game
+import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
+import com.libktx.game.lib.TimerFormatter
 import com.libktx.game.lib.rect
 import com.libktx.game.network.Endpoint
 import ktx.graphics.use
+import java.util.*
 
 class ExplosionScreen(game: Game,
                       batch: Batch,
@@ -35,9 +38,20 @@ class ExplosionScreen(game: Game,
 
         shapeRenderer.use(Filled) {
             it.rect(Color.BLACK, 0f, 0f, 800f, 480f)
+            it.rect(Color.WHITE, 330f, 350f, 140f, 30f)
+        }
+        batch.use {
+            val font = assets[FontAssets.Consolas]
+            font.color = Color.BLACK
+            font.draw(it, "BOMB SYSTEM", 341f, 369f)
+            font.color = Color.WHITE
+            font.draw(it, "A fatal explosion has occurred at " + getTimeStamp(), 50f, 250f)
+            font.draw(it, "The current bomb was terminated.", 50f, 220f)
         }
 
     }
+
+    fun getTimeStamp() = TimerFormatter.getFormattedDateAsString(Date(countdown.getTime()))
 
     override fun show() {
         assets[SoundAssets.BombExplosion].play()

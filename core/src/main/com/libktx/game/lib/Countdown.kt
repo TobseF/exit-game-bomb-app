@@ -7,20 +7,23 @@ class Countdown(private val minutes: Int, private val seconds: Int = 0) : Reseta
     private var finish = getEndTime()
     private var stoppedTime: Long? = null
 
-    fun getTime(): ms {
-        if (stoppedTime != null) {
-            return stoppedTime!!
-        }
-        val current = finish - System.currentTimeMillis()
+    fun getContdownTime(): ms {
+        return getContdownTime(stoppedTime ?: System.currentTimeMillis())
+    }
+
+    private fun getContdownTime(currentTime: ms): Long {
+        val current = finish - currentTime
         return max(current, 0)
     }
 
+    fun getTime(): Long = stoppedTime ?: System.currentTimeMillis()
+
     private fun getEndTime() = System.currentTimeMillis() + (minutes * 60 + seconds) * 1000
 
-    fun isFinished() = getTime() == 0L
+    fun isFinished() = getContdownTime() == 0L
 
     fun stop() {
-        stoppedTime = getTime()
+        stoppedTime = System.currentTimeMillis()
     }
 
     override fun reset() {
