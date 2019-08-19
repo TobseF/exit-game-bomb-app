@@ -6,4 +6,6 @@ object Config {
      * Time in minutes of a game
      */
     const val countdownTime = 20
+
+    const val hueBridgeIP = "192.168.0.99"
 }

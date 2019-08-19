@@ -14,6 +14,7 @@ import com.libktx.game.network.NetworkEvent
 import com.libktx.game.network.NetworkEventListener
 import com.libktx.game.network.NetworkEventManager
 import com.libktx.game.network.PuzzleResponse
+import com.libktx.game.network.hue.HueService
 import com.libktx.game.puzzle.LoginPuzzle
 import com.libktx.game.puzzle.NumbersPuzzle
 import com.libktx.game.puzzle.NumbersPuzzleState
@@ -44,6 +45,7 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             bindSingleton(AssetManager())
             bindSingleton(ShapeRenderer())
             bindSingleton(Countdown(minutes = Config.countdownTime))
+            bindSingleton(HueService())
 
             bindSingleton(NumbersPuzzleState())
             bindSingleton(LoginPuzzleState())
