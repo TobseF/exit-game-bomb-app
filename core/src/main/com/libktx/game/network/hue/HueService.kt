@@ -1,6 +1,5 @@
 package com.libktx.game.network.hue
 
-import com.badlogic.gdx.graphics.Color
 import com.libktx.game.Config
 import com.libktx.game.Preferences
 import io.github.zeroone3010.yahueapi.Hue
@@ -10,8 +9,6 @@ import io.github.zeroone3010.yahueapi.State
 import ktx.log.logger
 import java.util.concurrent.ExecutionException
 
-typealias HueColor = common.util.Color
-
 
 private val log = logger<HueService>()
 
@@ -19,6 +16,8 @@ class HueService {
     private var hue: Hue? = null
 
     enum class LightState { ON, OFF }
+
+    private val HUE_MAX = 254
 
     fun isPaired() = hue != null
 
@@ -61,29 +60,43 @@ class HueService {
         }
     }
 
+    enum class HueColor(val hue: Int) { Red(1), Green(21480) }
 
-    fun setLights(color: Color, lightState: LightState) {
+    fun setLights(color: HueColor, lightState: LightState) {
+        setLights(color.hue, lightState)
+    }
+
+
+    fun setLights(hueValue: Int, lightState: LightState) {
         hue?.let { hue ->
             val roomName = Preferences.hueRoomName ?: "Bomb"
-            val room = hue.getRoomByName(roomName)!!
-            setLights(color, room, lightState)
+            val roomByName = hue.getRoomByName(roomName)
+
+            if (roomByName == null) {
+                val firstRoom = hue.getRooms().firstOrNull()
+                if (firstRoom != null) {
+                    log.info { "Hue is connected but room '$roomName' is not present. Using first room: '${firstRoom.name}'" }
+                    setLights(hueValue, firstRoom, lightState)
+                } else {
+                    log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
+                }
+            } else {
+                setLights(hueValue, roomByName, lightState)
+            }
         } ?: run {
-            log.error { "Hue is not connected. Setting light $lightState to $color was not possible." }
+            log.error { "Hue is not connected. Setting light $lightState to $hueValue was not possible." }
         }
     }
 
-    private fun setLights(color: Color, room: Room, lightState: LightState) {
-        val hueState = State.builder().color(color.toJavaColor()).let {
+    private fun setLights(hueValue: Int, room: Room, lightState: LightState) {
+        val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(HUE_MAX).let {
             when (lightState) {
                 LightState.ON -> it.on()
                 LightState.OFF -> it.off()
             }
         }
-        log.error { "Setting light $lightState to $color." }
+        log.info { "Setting light $lightState to $hueValue." }
         room.setState(hueState)
     }
-
-
-    private fun Color.toJavaColor() = HueColor(this.r, this.g, this.b, this.a)
 
 }

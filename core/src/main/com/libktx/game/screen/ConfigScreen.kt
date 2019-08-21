@@ -21,6 +21,9 @@ import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.lib.setClickListener
 import com.libktx.game.network.Network
 import com.libktx.game.network.hue.HueService
+import com.libktx.game.network.hue.HueService.HueColor
+import com.libktx.game.network.hue.HueService.LightState.OFF
+import com.libktx.game.network.hue.HueService.LightState.ON
 import ktx.graphics.use
 import ktx.vis.table
 
@@ -125,6 +128,23 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
                 setClickListener { resetHueSettings() }
             }.cell(fill = true)
             row()
+
+            label("Hue Test Color: ")
+            val testColor = textField(HueColor.Green.hue.toString()) {
+            }.cell(grow = true)
+            row()
+
+            textButton("Test Light A") {
+                setClickListener { hueService.setLights(HueColor.Red, ON) }
+            }.cell(fill = true)
+            textButton("Test Light Color") {
+                setClickListener { hueService.setLights(testColor.text.toInt(), ON) }
+            }.cell(fill = true)
+            textButton("Test Light Off") {
+                setClickListener { hueService.setLights(HueColor.Red, OFF) }
+            }.cell(fill = true)
+            row()
+
             val buttonPair = textButton("Pair").cell(fill = true)
             val state = label("")
 
