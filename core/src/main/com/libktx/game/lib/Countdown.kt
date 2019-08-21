@@ -11,6 +11,8 @@ class Countdown(private val minutes: Int = 0, private val seconds: Int = 0) : Re
         return getContdownTime(stoppedTime ?: System.currentTimeMillis())
     }
 
+    fun getContdownTimeSeconds() = getContdownTime() / 1000
+
     private fun getContdownTime(currentTime: ms): Long {
         val current = finish - currentTime
         return max(current, 0)
@@ -21,6 +23,8 @@ class Countdown(private val minutes: Int = 0, private val seconds: Int = 0) : Re
     private fun getEndTime() = System.currentTimeMillis() + (minutes * 60 + seconds) * 1000
 
     fun isFinished() = getContdownTime() == 0L
+
+    fun isNotFinished() = !isFinished()
 
     fun stop() {
         stoppedTime = System.currentTimeMillis()

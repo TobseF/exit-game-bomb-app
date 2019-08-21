@@ -17,6 +17,9 @@ import com.libktx.game.network.Endpoint
 import ktx.graphics.use
 import java.util.*
 
+/**
+ * Plays the explosion sound and displays a back screen with an "destroyed" message.
+ */
 class ExplosionScreen(game: Game,
                       batch: Batch,
                       shapeRenderer: ShapeRenderer,
@@ -36,8 +39,9 @@ class ExplosionScreen(game: Game,
     override fun render(delta: Float) {
         super.render(delta)
 
+        clearScreen(Color.BLACK)
+
         shapeRenderer.use(Filled) {
-            it.rect(Color.BLACK, 0f, 0f, 800f, 480f)
             it.rect(Color.WHITE, 330f, 350f, 140f, 30f)
         }
         batch.use {

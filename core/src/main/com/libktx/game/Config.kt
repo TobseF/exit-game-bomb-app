@@ -7,5 +7,12 @@ object Config {
      */
     const val countdownTime = 20
 
-    const val hueBridgeIP = "192.168.0.99"
+    const val appIdentifier = "de.its.game.bomb"
+
+    val screenSize = Rect(800, 480)
+
+    data class Rect(val width: Float, val height: Float) {
+        constructor(width: Int, height: Int) : this(width.toFloat(), height.toFloat())
+    }
+
 }

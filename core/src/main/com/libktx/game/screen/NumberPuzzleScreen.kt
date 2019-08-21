@@ -17,13 +17,16 @@ import com.libktx.game.network.Endpoint
 import com.libktx.game.puzzle.NumbersPuzzleState
 import ktx.graphics.use
 
+/**
+ * Shows the NumbersPuzzle.
+ */
 class NumberPuzzleScreen(game: Game,
                          batch: Batch,
                          shapeRenderer: ShapeRenderer,
                          assets: AssetManager,
                          camera: OrthographicCamera,
                          countdown: Countdown,
-                         val state: NumbersPuzzleState) :
+                         private val state: NumbersPuzzleState) :
         AbstractPuzzleScreen(Endpoint.Numbers, game, batch, assets, camera, shapeRenderer, countdown) {
 
     private val timer = Timer(2.5f, state::calculateNewNumbers)

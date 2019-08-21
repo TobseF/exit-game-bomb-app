@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
+import com.libktx.game.Config
 import com.libktx.game.Game
 import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.SoundAssets
@@ -46,6 +47,7 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
 
     override fun render(delta: Float) {
         super.render(delta)
+
         renderCountdown()
         checkCountdown()
 
@@ -66,7 +68,7 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
 
     private fun renderCountdown() {
         shapeRenderer.use(Filled) {
-            it.rect(Color.LIGHT_GRAY, 0f, 0f, 800f, 480f)
+            it.rect(Color.LIGHT_GRAY, 0f, 0f, Config.screenSize.width, Config.screenSize.height)
         }
 
         shapeRenderer.use(Filled) {

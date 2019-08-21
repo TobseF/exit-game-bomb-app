@@ -2,7 +2,7 @@ package com.libktx.game.screen
 
 import com.libktx.game.lib.Resetable
 
-class LoginPuzzleState : Resetable {
+class BombState : Resetable {
 
     var bombActivated = false
 

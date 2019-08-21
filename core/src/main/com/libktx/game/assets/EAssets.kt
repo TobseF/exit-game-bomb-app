@@ -29,3 +29,9 @@ enum class FontAssets(val path: String) {
 
 fun AssetManager.load(asset: FontAssets) = load<BitmapFont>(asset.path)
 operator fun AssetManager.get(asset: FontAssets) = getAsset<BitmapFont>(asset.path)
+
+// app icons
+enum class Icons(val path: String) {
+    AppIcon64("icons/icon_64.png"),
+    AppIcon16("icons/icon_16.png"),
+}

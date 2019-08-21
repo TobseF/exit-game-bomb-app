@@ -1,5 +1,6 @@
 buildscript {
     ext.kotlinVersion = '1.3.31'
+    ext.kotlinGradleVersion = '3.4.2'
 
     repositories {
         mavenLocal()
@@ -10,7 +11,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
+        classpath "com.android.tools.build:gradle:$kotlinGradleVersion"
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
     }
 }
@@ -27,7 +28,7 @@ allprojects {
         ashleyVersion = '1.7.3'
         aiVersion = '1.8.1'
         ktxVersion = '1.9.9-b2'
-        hueapiVersion = "1.2.0"
+        hueapiVersion = "1.3.0"
         kotlinTestVersion = '5:3.3.2'
     }
 
@@ -68,6 +69,7 @@ project(":core") {
 
     dependencies {
         api "org.jetbrains.kotlin:kotlin-stdlib:$kotlinVersion"
+        api "org.jetbrains.kotlin:kotlin-reflect:$kotlinVersion"
 
         api "com.badlogicgames.ashley:ashley:$ashleyVersion"
         api "com.badlogicgames.gdx:gdx:$gdxVersion"
@@ -78,8 +80,10 @@ project(":core") {
         api "io.github.libktx:ktx-graphics:$ktxVersion"
         api "io.github.libktx:ktx-inject:$ktxVersion"
         api "io.github.libktx:ktx-log:$ktxVersion"
+        api "io.github.libktx:ktx-vis:$ktxVersion"
+        api "io.github.libktx:ktx-style:$ktxVersion"
 
-        api "io.github.zeroone3010:yetanotherhueapi:$hueapiVersion"
+        api "io.github.tobsef:yetanotherhueapi:$hueapiVersion"
 
         testImplementation  "io.kotlintest:kotlintest-runner-junit$kotlinTestVersion"
     }
