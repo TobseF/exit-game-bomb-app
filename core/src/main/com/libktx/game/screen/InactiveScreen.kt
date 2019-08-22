@@ -15,7 +15,7 @@ import com.libktx.game.lib.draw
 import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.network.Endpoint
 import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueColor
+import com.libktx.game.network.hue.HueService.HueValue
 import com.libktx.game.network.hue.HueService.LightState.ON
 import ktx.graphics.use
 
@@ -52,7 +52,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
         if (lightSensor != null && activeTimer.isFinished() && bombState.isBomNotActivated() && lightSensor.getCurrentLux() > 1) {
             val sound = assets[SoundAssets.BombActivated]
             sound.play()
-            hueService.setLights(HueColor.Red, ON)
+            hueService.setLights(HueValue.Red, ON)
 
             bombState.activateBomb()
         }

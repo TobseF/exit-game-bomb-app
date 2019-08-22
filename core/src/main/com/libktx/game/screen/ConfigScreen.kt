@@ -7,21 +7,24 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
+import com.kotcrab.vis.ui.VisUI
 import com.kotcrab.vis.ui.widget.VisProgressBar
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.libktx.game.Config
 import com.libktx.game.Game
 import com.libktx.game.Preferences
+import com.libktx.game.lib.addValueChangeListener
 import com.libktx.game.lib.bind
 import com.libktx.game.lib.rect
 import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.lib.setClickListener
 import com.libktx.game.network.Network
 import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueColor
+import com.libktx.game.network.hue.HueService.HueValue
 import com.libktx.game.network.hue.HueService.LightState.OFF
 import com.libktx.game.network.hue.HueService.LightState.ON
 import ktx.graphics.use
@@ -99,23 +102,20 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             row()
 
             label("Hue IP:")
-            textField {
+            textField(Preferences.hueIp ?: "") {
                 bind(Preferences::hueIp)
             }.cell(grow = true)
             row()
 
             label("Hue Room: ")
-            textField {
+            textField(Preferences.hueRoomName ?: "") {
                 bind(Preferences::hueRoomName)
             }.cell(grow = true)
 
             row()
 
             label("Hue Key: ")
-            val labelApiKey = textField {
-                bind(Preferences::hueApiKey)
-                isDisabled = true
-            }.cell(grow = true)
+            val labelApiKey = textField(Preferences.hueApiKey ?: "").cell(grow = true, colspan = 2)
 
             row()
 
@@ -129,19 +129,32 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             }.cell(fill = true)
             row()
 
-            label("Hue Test Color: ")
-            val testColor = textField(HueColor.Green.hue.toString()) {
+            val white: Drawable = VisUI.getSkin().getDrawable("white")
+
+            val previewColor = image(drawable = white) {
+                height = 20f
+                width = 20f
+                color = Color.RED
+            }.cell(fill = true)
+            val previewColorValue = textField(HueValue.Green.hue.toString()) {
+            }.cell(grow = true)
+            slider(min = 0f, max = HueColor.COLOR_HUE_MAX) {
+                value = HueValue.Green.hue.toFloat()
+                addValueChangeListener { hue ->
+                    previewColor.color = HueColor.fromHue(hue)
+                    previewColorValue.text = hue.toInt().toString()
+                }
             }.cell(grow = true)
             row()
 
-            textButton("Test Light A") {
-                setClickListener { hueService.setLights(HueColor.Red, ON) }
+            textButton("Test Light Red") {
+                setClickListener { hueService.setLights(HueValue.Red, ON) }
             }.cell(fill = true)
             textButton("Test Light Color") {
-                setClickListener { hueService.setLights(testColor.text.toInt(), ON) }
+                setClickListener { hueService.setLights(previewColorValue.text.toIntOrNull() ?: 0, ON) }
             }.cell(fill = true)
             textButton("Test Light Off") {
-                setClickListener { hueService.setLights(HueColor.Red, OFF) }
+                setClickListener { hueService.setLights(HueValue.Red, OFF) }
             }.cell(fill = true)
             row()
 
@@ -151,11 +164,11 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             buttonPair.setClickListener {
                 state.setText("Pairing ...")
                 pairedCheckBox.isChecked = hueService.pair()
-                state.clear()
                 val hueApiKey: String? = Preferences.hueApiKey
                 if (hueApiKey != null) {
                     labelApiKey.text = hueApiKey
                 }
+                state.clear()
             }
 
             row()
@@ -168,6 +181,18 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
         stage.addActor(table)
         //stage.isDebugAll = true
         stage.viewport.centerCamera()
+    }
+
+    class HueColor : Color(WHITE) {
+        companion object {
+            const val COLOR_HUE_MAX = 65280f
+
+            fun fromHue(hue: Float): Color? {
+                val hueAsLibGDX = 360f * (hue / COLOR_HUE_MAX)
+                return HueColor().fromHsv(hueAsLibGDX, 1f, 1f)
+            }
+        }
+
     }
 
     private fun resetHueSettings() {

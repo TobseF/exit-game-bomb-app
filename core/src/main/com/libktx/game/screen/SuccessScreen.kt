@@ -12,7 +12,7 @@ import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.network.Endpoint
 import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueColor
+import com.libktx.game.network.hue.HueService.HueValue
 import com.libktx.game.network.hue.HueService.LightState.ON
 
 class SuccessScreen(game: Game,
@@ -42,7 +42,7 @@ class SuccessScreen(game: Game,
 
     override fun show() {
         assets[SoundAssets.BombDeactivated].play()
-        hueService.setLights(HueColor.Green, ON)
+        hueService.setLights(HueValue.Green, ON)
 
 
     }

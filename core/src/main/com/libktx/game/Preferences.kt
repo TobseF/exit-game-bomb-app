@@ -13,9 +13,13 @@ object Preferences {
     private fun get(preference: Preference): String? = preferences.getString(preference.name)
     private fun get(preference: Preference, default: String): String = preferences.getString(preference.name, default)
 
-    private fun save(preference: Preference, value: String) {
-        preferences.putString(preference.name, value)
-        preferences.flush()
+    private fun save(preference: Preference, value: String?) {
+        if (value == null) {
+            preferences.remove(preference.name)
+        } else {
+            preferences.putString(preference.name, value)
+            preferences.flush()
+        }
     }
 
     var hueIp: String? by Delegate(HueIP)
@@ -36,9 +40,7 @@ object Preferences {
         }
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String?) {
-            value?.let {
-                save(prefKey, it)
-            }
+            save(prefKey, value)
         }
     }
 }

@@ -47,10 +47,10 @@ class HueService {
 
     private fun acquireNewApiKey(ipAddress: String): String? {
         log.info { "Initialize new API connection" }
-        val newKey = Hue.hueBridgeConnectionBuilder(ipAddress).initializeApiConnection(Config.appIdentifier)
+        val connectionBuiler = Hue.hueBridgeConnectionBuilder(ipAddress)
         log.info { "Push the button on your Hue Bridge to resolve the apiKey future" }
         try {
-            return newKey.get()!!
+            return connectionBuiler.initializeApiConnection(Config.appIdentifier)
         } catch (e: HueApiException) {
             log.error { "Failed connecting to bridge" }
             return null
@@ -60,30 +60,34 @@ class HueService {
         }
     }
 
-    enum class HueColor(val hue: Int) { Red(1), Green(21480) }
+    enum class HueValue(val hue: Int) { Red(1), Green(21480) }
 
-    fun setLights(color: HueColor, lightState: LightState) {
+    fun setLights(color: HueValue, lightState: LightState) {
         setLights(color.hue, lightState)
     }
 
 
     fun setLights(hueValue: Int, lightState: LightState) {
-        hue?.let { hue ->
-            val roomName = Preferences.hueRoomName ?: "Bomb"
-            val roomByName = hue.getRoomByName(roomName)
+        try {
+            hue?.let { hue ->
+                val roomName = Preferences.hueRoomName ?: "Bomb"
+                val roomByName = hue.getRoomByName(roomName)
 
-            if (roomByName == null) {
-                val firstRoom = hue.getRooms().firstOrNull()
-                if (firstRoom != null) {
-                    log.info { "Hue is connected but room '$roomName' is not present. Using first room: '${firstRoom.name}'" }
-                    setLights(hueValue, firstRoom, lightState)
+                if (roomByName == null) {
+                    val firstRoom = hue.getRooms().firstOrNull()
+                    if (firstRoom != null) {
+                        log.info { "Hue is connected but room '$roomName' is not present. Using first room: '${firstRoom.name}'" }
+                        setLights(hueValue, firstRoom, lightState)
+                    } else {
+                        log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
+                    }
                 } else {
-                    log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
+                    setLights(hueValue, roomByName, lightState)
                 }
-            } else {
-                setLights(hueValue, roomByName, lightState)
+            } ?: run {
+                log.error { "Hue is not connected. Setting light $lightState to $hueValue was not possible." }
             }
-        } ?: run {
+        } catch (e: HueApiException) {
             log.error { "Hue is not connected. Setting light $lightState to $hueValue was not possible." }
         }
     }
