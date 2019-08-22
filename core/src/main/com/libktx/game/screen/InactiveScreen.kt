@@ -16,8 +16,13 @@ import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.network.Endpoint
 import com.libktx.game.network.hue.HueService
 import com.libktx.game.network.hue.HueService.HueValue
+import com.libktx.game.network.hue.HueService.LightState.OFF
 import com.libktx.game.network.hue.HueService.LightState.ON
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import ktx.graphics.use
+
+typealias async = ktx.async.KtxAsync
 
 /**
  * Inactive bomb, waiting to get activated by light.
@@ -67,10 +72,33 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
     private fun activateBomb() {
         val sound = assets[SoundAssets.BombActivated]
         sound.play()
-        hueService.setLights(HueValue.Red, ON)
+        blinkLights()
 
         bombState.activateBomb()
         switchToFirstPuzzle()
+    }
+
+    private fun blinkLights() {
+        val delay = 800L
+        async.launch {
+            hueLightsOn()
+            delay(delay)
+            hueLightsOff()
+            delay(delay)
+            hueLightsOn()
+            delay(delay)
+            hueLightsOff()
+            delay(delay)
+            hueLightsOn()
+        }
+    }
+
+    private fun hueLightsOff() {
+        hueService.setLights(HueValue.White, OFF, transitionTime = 1)
+    }
+
+    private fun hueLightsOn() {
+        hueService.setLights(HueValue.Red, ON, transitionTime = 2)
     }
 
     override fun show() {

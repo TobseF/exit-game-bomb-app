@@ -68,19 +68,19 @@ class HueService {
 
     enum class HueValue(val hue: Int) { Red(1), Green(21480), White(32640) }
 
-    fun setLights(color: HueValue, lightState: LightState, brightness: Int = HUE_MAX) {
-        setLights(color.hue, lightState, brightness)
+    fun setLights(color: HueValue, lightState: LightState, brightness: Int = HUE_MAX, transitionTime: Int = 8) {
+        setLights(color.hue, lightState, brightness, transitionTime)
     }
 
 
-    fun setLights(hueValue: Int, lightState: LightState, brightness: Int = HUE_MAX) {
+    fun setLights(hueValue: Int, lightState: LightState, brightness: Int = HUE_MAX, transitionTime: Int = 8) {
         try {
             hue?.let { _ ->
                 val room = findRoom()
                 if (room == null) {
                     log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
                 } else {
-                    setLights(hueValue, brightness, room, lightState)
+                    setLights(hueValue, brightness, transitionTime, room, lightState)
                 }
             } ?: run {
                 log.error { "Hue is not connected. Setting light $lightState to $hueValue was not possible." }
@@ -106,10 +106,10 @@ class HueService {
         }
     }
 
-    private fun setLights(hueValue: Int, brightness: Int = HUE_MAX, room: Room, state: LightState) {
+    private fun setLights(hueValue: Int, brightness: Int = HUE_MAX, transitionTime: Int = 8, room: Room, state: LightState) {
         KtxAsync.launch {
             log.info { "Setting light $state to $hueValue." }
-            val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).let {
+            val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).transitionTime(transitionTime).let {
                 when (state) {
                     LightState.ON -> it.on()
                     LightState.OFF -> it.off()
