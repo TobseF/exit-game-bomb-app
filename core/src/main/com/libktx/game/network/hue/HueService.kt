@@ -6,6 +6,10 @@ import io.github.zeroone3010.yahueapi.Hue
 import io.github.zeroone3010.yahueapi.HueApiException
 import io.github.zeroone3010.yahueapi.Room
 import io.github.zeroone3010.yahueapi.State
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import ktx.async.KtxAsync
+import ktx.async.newSingleThreadAsyncContext
 import ktx.log.logger
 import java.util.concurrent.ExecutionException
 
@@ -14,6 +18,8 @@ private val log = logger<HueService>()
 
 class HueService {
     private var hue: Hue? = null
+
+    private val executor = newSingleThreadAsyncContext()
 
     enum class LightState { ON, OFF }
 
@@ -101,14 +107,20 @@ class HueService {
     }
 
     private fun setLights(hueValue: Int, brightness: Int = HUE_MAX, room: Room, state: LightState) {
-        val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).let {
-            when (state) {
-                LightState.ON -> it.on()
-                LightState.OFF -> it.off()
+        KtxAsync.launch {
+            log.info { "Setting light $state to $hueValue." }
+            val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).let {
+                when (state) {
+                    LightState.ON -> it.on()
+                    LightState.OFF -> it.off()
+                }
             }
+            withContext(executor) {
+                room.setState(hueState)
+            }
+            log.info { "Finished setting light" }
         }
-        log.info { "Setting light $state to $hueValue." }
-        room.setState(hueState)
+
     }
 
 }
