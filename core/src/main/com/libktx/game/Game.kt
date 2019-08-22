@@ -69,7 +69,7 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(EmptyPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
-            addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject()))
+            addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addScreen(SuccessScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
 
             puzzleManager.addPuzzle(LoginPuzzle())

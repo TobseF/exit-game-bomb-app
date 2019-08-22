@@ -14,6 +14,6 @@ class BombState : Resetable {
         bombActivated = true
     }
 
-    fun isBomNotActivated() = !bombActivated
+    fun isBombNotActivated() = !bombActivated
 
 }

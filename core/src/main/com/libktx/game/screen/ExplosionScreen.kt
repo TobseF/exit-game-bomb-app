@@ -14,6 +14,9 @@ import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.TimerFormatter
 import com.libktx.game.lib.rect
 import com.libktx.game.network.Endpoint
+import com.libktx.game.network.hue.HueService
+import com.libktx.game.network.hue.HueService.HueValue.Red
+import com.libktx.game.network.hue.HueService.LightState.OFF
 import ktx.graphics.use
 import java.util.*
 
@@ -21,7 +24,9 @@ import java.util.*
  * Plays the explosion sound and displays a back screen with an "destroyed" message.
  */
 class ExplosionScreen(game: Game,
+                      val bombState: BombState,
                       batch: Batch,
+                      private val hueService: HueService,
                       shapeRenderer: ShapeRenderer,
                       assets: AssetManager,
                       camera: OrthographicCamera,
@@ -29,7 +34,12 @@ class ExplosionScreen(game: Game,
 
 
     override fun switchToNextScreen() {
-        // This is the end
+        resetGame()
+    }
+
+    private fun resetGame() {
+        bombState.reset()
+        game.reset()
     }
 
     override fun checkCountdown() {
@@ -59,5 +69,6 @@ class ExplosionScreen(game: Game,
 
     override fun show() {
         assets[SoundAssets.BombExplosion].play()
+        hueService.setLights(Red, OFF)
     }
 }

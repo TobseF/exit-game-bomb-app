@@ -71,5 +71,5 @@ class LoadingScreen(private val game: Game,
         assets.update()
     }
 
-    private fun triggeredNextScreen() = (Gdx.input.isTouched || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && assets.isFinished
+    private fun triggeredNextScreen() = (Gdx.input.justTouched() || Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) && assets.isFinished
 }

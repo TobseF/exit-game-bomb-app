@@ -41,30 +41,46 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
     private val activeTimer = Countdown(seconds = 10)
 
     override fun switchToNextScreen() {
+        switchToFirstPuzzle()
+        if (bombState.isBombNotActivated()) { // for debugging
+            activateBomb()
+        }
+    }
+
+    private fun switchToFirstPuzzle() {
         hide()
         game.setScreen<LoginPuzzleScreen>()
     }
 
     /**
-     * Play an alarm sound when the bomb gets activated by light
+     * Checks if the bomb was activated by an external light source
+     */
+    private fun tryToActivateBomb() {
+        if (lightSensor != null && activeTimer.isFinished() && bombState.isBombNotActivated() && lightSensor.getCurrentLux() > 1) {
+            activateBomb()
+        }
+    }
+
+    /**
+     * Play an alarm sound when the bomb gets activated by light. Changes the hue lights to red
      */
     private fun activateBomb() {
-        if (lightSensor != null && activeTimer.isFinished() && bombState.isBomNotActivated() && lightSensor.getCurrentLux() > 1) {
-            val sound = assets[SoundAssets.BombActivated]
-            sound.play()
-            hueService.setLights(HueValue.Red, ON)
+        val sound = assets[SoundAssets.BombActivated]
+        sound.play()
+        hueService.setLights(HueValue.Red, ON)
 
-            bombState.activateBomb()
-        }
+        bombState.activateBomb()
+        switchToFirstPuzzle()
     }
 
     override fun show() {
         activeTimer.reset()
+        hueService.setLights(HueValue.White, ON, 85)
     }
 
     override fun render(delta: Float) {
         super.render(delta)
-        activateBomb()
+        tryToActivateBomb()
         clearScreen(Color.BLACK)
 
         batch.use {

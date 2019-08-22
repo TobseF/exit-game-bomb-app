@@ -55,7 +55,7 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
     }
 
     private fun checkInput() {
-        if (Gdx.input.isKeyJustPressed(SPACE)) {
+        if (Gdx.input.isKeyJustPressed(SPACE) || Gdx.input.justTouched()) {
             switchToNextScreen()
         }
     }

@@ -60,29 +60,21 @@ class HueService {
         }
     }
 
-    enum class HueValue(val hue: Int) { Red(1), Green(21480) }
+    enum class HueValue(val hue: Int) { Red(1), Green(21480), White(32640) }
 
-    fun setLights(color: HueValue, lightState: LightState) {
-        setLights(color.hue, lightState)
+    fun setLights(color: HueValue, lightState: LightState, brightness: Int = HUE_MAX) {
+        setLights(color.hue, lightState, brightness)
     }
 
 
-    fun setLights(hueValue: Int, lightState: LightState) {
+    fun setLights(hueValue: Int, lightState: LightState, brightness: Int = HUE_MAX) {
         try {
-            hue?.let { hue ->
-                val roomName = Preferences.hueRoomName ?: "Bomb"
-                val roomByName = hue.getRoomByName(roomName)
-
-                if (roomByName == null) {
-                    val firstRoom = hue.getRooms().firstOrNull()
-                    if (firstRoom != null) {
-                        log.info { "Hue is connected but room '$roomName' is not present. Using first room: '${firstRoom.name}'" }
-                        setLights(hueValue, firstRoom, lightState)
-                    } else {
-                        log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
-                    }
+            hue?.let { _ ->
+                val room = findRoom()
+                if (room == null) {
+                    log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
                 } else {
-                    setLights(hueValue, roomByName, lightState)
+                    setLights(hueValue, brightness, room, lightState)
                 }
             } ?: run {
                 log.error { "Hue is not connected. Setting light $lightState to $hueValue was not possible." }
@@ -92,14 +84,30 @@ class HueService {
         }
     }
 
-    private fun setLights(hueValue: Int, room: Room, lightState: LightState) {
-        val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(HUE_MAX).let {
-            when (lightState) {
+    private fun findRoom(): Room? {
+        val roomName = Preferences.hueRoomName ?: "Bomb"
+        val roomByName = hue?.getRoomByName(roomName)
+        if (roomByName == null) {
+            val firstRoom = hue?.getRooms()?.firstOrNull()
+            if (firstRoom != null) {
+                log.info { "Hue is connected but room '$roomName' is not present. Using first room: '${firstRoom.name}'" }
+                return firstRoom
+            } else {
+                return null
+            }
+        } else {
+            return roomByName
+        }
+    }
+
+    private fun setLights(hueValue: Int, brightness: Int = HUE_MAX, room: Room, state: LightState) {
+        val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).let {
+            when (state) {
                 LightState.ON -> it.on()
                 LightState.OFF -> it.off()
             }
         }
-        log.info { "Setting light $lightState to $hueValue." }
+        log.info { "Setting light $state to $hueValue." }
         room.setState(hueState)
     }
 
