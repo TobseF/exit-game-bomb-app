@@ -1,0 +1,19 @@
+info face="DSEG7 Classic Mini-Regular" size=180 bold=0 italic=0 charset="" unicode=0 stretchH=100 smooth=1 aa=1 padding=1,1,1,1 spacing=-2,-2
+common lineHeight=198 base=189 scaleW=512 scaleH=512 pages=2 packed=0
+page id=0 file="counter_big1.png"
+page id=1 file="counter_big2.png"
+chars count=13
+char id=0       x=452  y=183  width=50   height=122  xoffset=5    yoffset=59   xadvance=66   page=0    chnl=0 
+char id=32      x=0    y=0    width=0    height=0    xoffset=-1   yoffset=179  xadvance=36   page=0    chnl=0 
+char id=48      x=0    y=0    width=113  height=183  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=49      x=439  y=0    width=19   height=157  xoffset=111  yoffset=11   xadvance=147  page=0    chnl=0 
+char id=50      x=113  y=0    width=113  height=183  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=51      x=226  y=0    width=100  height=183  xoffset=30   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=53      x=326  y=0    width=113  height=183  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=54      x=0    y=183  width=113  height=183  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=55      x=339  y=183  width=113  height=170  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=56      x=113  y=183  width=113  height=183  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=57      x=226  y=183  width=113  height=183  xoffset=17   yoffset=-2   xadvance=147  page=0    chnl=0 
+char id=58      x=458  y=0    width=24   height=98   xoffset=6    yoffset=43   xadvance=36   page=0    chnl=0 
+char id=52      x=0    y=0    width=113  height=157  xoffset=17   yoffset=11   xadvance=147  page=1    chnl=0 
+kernings count=0

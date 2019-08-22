@@ -22,6 +22,7 @@ operator fun AssetManager.get(asset: SoundAssets) = getAsset<Sound>(asset.path)
 // fonts
 enum class FontAssets(val path: String) {
     Counter("fonts/counter.fnt"),
+    CounterBig("fonts/counter_big.fnt"),
     ConsolasBig("fonts/consolas_big.fnt"),
     Consolas("fonts/consolas_20.fnt"),
     NumbersBig("fonts/numbers_big.fnt")
