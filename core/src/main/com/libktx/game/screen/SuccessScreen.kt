@@ -15,13 +15,15 @@ import com.libktx.game.lib.TimeFormatter
 import com.libktx.game.lib.draw
 import com.libktx.game.lib.drawWithShadow
 import com.libktx.game.network.Endpoint
-import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueValue
-import com.libktx.game.network.hue.HueService.LightState.ON
+import com.libktx.game.network.services.HueService
+import com.libktx.game.network.services.HueService.HueValue
+import com.libktx.game.network.services.HueService.LightState.ON
+import com.libktx.game.network.services.TimerService
 import ktx.graphics.use
 
 class SuccessScreen(game: Game,
                     private val hueService: HueService,
+                    private val timerService: TimerService,
                     batch: Batch,
                     shapeRenderer: ShapeRenderer,
                     assets: AssetManager,
@@ -52,6 +54,7 @@ class SuccessScreen(game: Game,
     override fun show() {
         assets[SoundAssets.BombDeactivated].play()
         hueService.setLights(HueValue.Green, ON)
+        timerService.stop(countdown.getContdownTime())
     }
 
     private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getContdownTime())

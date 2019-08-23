@@ -1,4 +1,4 @@
-package com.libktx.game.network.hue
+package com.libktx.game.network.services
 
 import com.libktx.game.Config
 import com.libktx.game.Preferences

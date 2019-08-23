@@ -16,7 +16,7 @@ import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.load
 import com.libktx.game.lib.draw
 import com.libktx.game.network.Network
-import com.libktx.game.network.hue.HueService
+import com.libktx.game.network.services.HueService
 import ktx.app.KtxScreen
 import ktx.graphics.use
 

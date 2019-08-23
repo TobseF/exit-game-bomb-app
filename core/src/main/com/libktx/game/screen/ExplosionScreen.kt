@@ -14,9 +14,9 @@ import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.TimeFormatter
 import com.libktx.game.lib.rect
 import com.libktx.game.network.Endpoint
-import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueValue.Red
-import com.libktx.game.network.hue.HueService.LightState.OFF
+import com.libktx.game.network.services.HueService
+import com.libktx.game.network.services.HueService.HueValue.Red
+import com.libktx.game.network.services.HueService.LightState.OFF
 import ktx.graphics.use
 import java.util.*
 

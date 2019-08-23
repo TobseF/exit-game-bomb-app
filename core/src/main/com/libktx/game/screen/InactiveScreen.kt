@@ -14,10 +14,11 @@ import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.draw
 import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.network.Endpoint
-import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueValue
-import com.libktx.game.network.hue.HueService.LightState.OFF
-import com.libktx.game.network.hue.HueService.LightState.ON
+import com.libktx.game.network.services.HueService
+import com.libktx.game.network.services.HueService.HueValue
+import com.libktx.game.network.services.HueService.LightState.OFF
+import com.libktx.game.network.services.HueService.LightState.ON
+import com.libktx.game.network.services.TimerService
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import ktx.graphics.use
@@ -32,6 +33,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
                      game: Game,
                      private val bombState: BombState,
                      private val hueService: HueService,
+                     private val timerService: TimerService,
                      private val font: BitmapFont,
                      batch: Batch,
                      shapeRenderer: ShapeRenderer,
@@ -72,6 +74,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
         val sound = assets[SoundAssets.BombActivated]
         sound.play()
         blinkLights()
+        timerService.start(countdown.getContdownTime())
 
         bombState.activateBomb()
         switchToFirstPuzzle()
@@ -103,6 +106,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
     override fun show() {
         activeTimer.reset()
         hueService.setLights(HueValue.White, ON, 85)
+        timerService.disable()
     }
 
     override fun render(delta: Float) {

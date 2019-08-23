@@ -23,10 +23,10 @@ import com.libktx.game.lib.rect
 import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.lib.setClickListener
 import com.libktx.game.network.Network
-import com.libktx.game.network.hue.HueService
-import com.libktx.game.network.hue.HueService.HueValue
-import com.libktx.game.network.hue.HueService.LightState.OFF
-import com.libktx.game.network.hue.HueService.LightState.ON
+import com.libktx.game.network.services.HueService
+import com.libktx.game.network.services.HueService.HueValue
+import com.libktx.game.network.services.HueService.LightState.OFF
+import com.libktx.game.network.services.HueService.LightState.ON
 import ktx.graphics.use
 import ktx.vis.table
 
@@ -99,6 +99,12 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
                 isDisabled = true
             }.cell(grow = true)
 
+            row()
+
+            label("Timer IP:")
+            textField(Preferences.timerIp ?: "") {
+                bind(Preferences::timerIp)
+            }.cell(grow = true)
             row()
 
             label("Hue IP:")

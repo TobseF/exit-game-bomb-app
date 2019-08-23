@@ -1,4 +1,4 @@
-package com.libktx.game.network.hue
+package com.libktx.game.network.services
 
 import com.libktx.game.Config
 import com.libktx.game.Preferences
@@ -20,7 +20,7 @@ class TimerService {
 
     private val executor = newSingleThreadAsyncContext()
 
-    private fun getPath(endpoint: String) = "${Preferences.timerIp}:${Config.TimerPort}/$endpoint"
+    private fun getPath(endpoint: String) = "http://${Preferences.timerIp}:${Config.TimerPort}/$endpoint"
 
     /**
      * Start's the timer
@@ -53,7 +53,14 @@ class TimerService {
 
     private fun asyncHttpRequest(url: String, type: EventType, content: String? = null) {
         KtxAsync.launch(executor) {
-            httpRequest(url = url, content = content, method = type.toString())
+            try {
+                val response = httpRequest(url = url, content = content, method = type.toString())
+                if (response.statusCode != 200) {
+                    log.error { "Failed access timer on url (code: ${response.statusCode}): $url" }
+                }
+            } catch (e: Exception) {
+                log.error(e) { "Failed access timer on url: $url" }
+            }
         }
     }
 

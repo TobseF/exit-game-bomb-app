@@ -1,6 +1,5 @@
 package com.libktx.game
 
-import com.badlogic.ashley.core.PooledEngine
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -17,7 +16,8 @@ import com.libktx.game.network.NetworkEvent
 import com.libktx.game.network.NetworkEventListener
 import com.libktx.game.network.NetworkEventManager
 import com.libktx.game.network.PuzzleResponse
-import com.libktx.game.network.hue.HueService
+import com.libktx.game.network.services.HueService
+import com.libktx.game.network.services.TimerService
 import com.libktx.game.puzzle.LoginPuzzle
 import com.libktx.game.puzzle.NumbersPuzzle
 import com.libktx.game.puzzle.NumbersPuzzleState
@@ -52,6 +52,7 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             bindSingleton(ShapeRenderer())
             bindSingleton(Countdown(minutes = Config.countdownTime))
             bindSingleton(HueService())
+            bindSingleton(TimerService())
 
             bindSingleton(NumbersPuzzleState())
             bindSingleton(BombState())
@@ -59,21 +60,20 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             puzzleManager = inject()
             lightSensor?.let { bindSingleton(it) }
 
-            // The camera ensures we can render using our target resolution of 800x480
+            // The camera ensures we can render using our target resolution
             // pixels no matter what the screen resolution is.
             bindSingleton(OrthographicCamera().apply { setToOrtho(Config.screenSize) })
-            bindSingleton(PooledEngine())
 
             addScreen(LoadingScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addScreen(ConfigScreen(injectOptinal(), inject(), inject(), inject(), inject(), inject(), inject()))
-            addScreen(InactiveScreen(injectOptinal(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
+            addScreen(InactiveScreen(injectOptinal(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
 
             addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(EmptyPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
             addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
-            addScreen(SuccessScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
+            addScreen(SuccessScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
 
             puzzleManager.addPuzzle(LoginPuzzle())
             puzzleManager.addPuzzle(NumbersPuzzle(inject()))
@@ -92,7 +92,6 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
     }
 
     override fun dispose() {
-        log.debug { "Entities in engine: ${context.inject<PooledEngine>().entities.size()}" }
         context.dispose()
         super.dispose()
     }
