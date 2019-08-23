@@ -2,6 +2,7 @@ package com.libktx.game
 
 object Config {
     const val ServerPort = 5000
+    const val TimerPort = 5001
     /**
      * Time in minutes of a game
      */

@@ -8,7 +8,7 @@ object Preferences {
 
     private val preferences = Gdx.app.getPreferences(Config.appIdentifier)
 
-    private enum class Preference { HueIP, HueRoomName, HueApiKey }
+    private enum class Preference { HueIP, HueRoomName, HueApiKey, TimerIp }
 
     private fun get(preference: Preference): String? = preferences.getString(preference.name)
     private fun get(preference: Preference, default: String): String = preferences.getString(preference.name, default)
@@ -27,6 +27,8 @@ object Preferences {
     var hueRoomName: String? by Delegate(HueRoomName)
 
     var hueApiKey: String? by Delegate(HueApiKey)
+
+    var timerIp: String? by Delegate(TimerIp)
 
     private class Delegate(private val prefKey: Preference) {
 

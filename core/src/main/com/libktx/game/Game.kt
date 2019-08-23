@@ -25,6 +25,7 @@ import com.libktx.game.puzzle.ResetPuzzle
 import com.libktx.game.screen.*
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
+import ktx.async.KtxAsync
 import ktx.log.logger
 
 private val log = logger<Game>()
@@ -42,6 +43,8 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
     override fun create() {
         context.bind {
             VisUI.load()
+            KtxAsync.initiate()
+
             bindSingleton(this@Game)
             bindSingleton<Batch>(SpriteBatch())
             bindSingleton(BitmapFont())
