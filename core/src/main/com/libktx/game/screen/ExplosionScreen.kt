@@ -68,7 +68,7 @@ class ExplosionScreen(game: Game,
 
     }
 
-    private fun getTimeStamp() = TimeFormatter.getFormattedDateAsString(Date(countdown.getContdownTime()))
+    private fun getTimeStamp() = TimeFormatter.getFormattedDateAsString(Date(countdown.getTime()))
 
     override fun show() {
         assets[SoundAssets.BombExplosion].play()
