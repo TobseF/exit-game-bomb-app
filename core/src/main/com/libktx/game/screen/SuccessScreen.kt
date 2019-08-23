@@ -45,16 +45,26 @@ class SuccessScreen(game: Game,
         clearScreen(Color.GREEN)
         batch.use {
             val counterFont = assets[FontAssets.CounterBig]
-            counterFont.drawWithShadow(it, Color.GREEN, Color.DARK_GRAY, "88:88", 100f, 340f)
-            counterFont.draw(it, Color.BLACK, getTimeAsString(), 100f, 340f)
-            assets[FontAssets.ConsolasBig].draw(it, Color.WHITE, "UNLOCKED", 298f, 80f)
+            counterFont.drawWithShadow(it, Color.GREEN, Color.DARK_GRAY, "88:88", 85f, 340f)
+            counterFont.draw(it, Color.BLACK, getTimeAsString(), 85f, 340f)
+            assets[FontAssets.ConsolasBig].draw(it, Color.WHITE, "UNLOCKED", 298f, 95f)
         }
     }
 
     override fun show() {
+        setFixedNumbersFontWidth()
+
         assets[SoundAssets.BombDeactivated].play()
         hueService.setLights(HueValue.Green, ON)
         timerService.stop(countdown.getContdownTime())
+    }
+
+    /**
+     * Ensure all numbers in the font have the same width. Otherwise a 20:00 is longer than 10:00!
+     */
+    private fun setFixedNumbersFontWidth() {
+        val counterFont = assets[FontAssets.CounterBig]
+        (0..9).forEach { counterFont.setFixedWidthGlyphs(it.toString()) }
     }
 
     private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getContdownTime())
