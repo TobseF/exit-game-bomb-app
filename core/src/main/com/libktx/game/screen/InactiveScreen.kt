@@ -53,7 +53,6 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
     }
 
     private fun switchToFirstPuzzle() {
-        hide()
         game.setScreen<LoginPuzzleScreen>()
     }
 

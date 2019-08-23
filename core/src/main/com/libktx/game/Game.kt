@@ -31,7 +31,7 @@ private val log = logger<Game>()
 
 class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>(), NetworkEventListener, Resetable {
 
-    private val puzzleManager = NetworkEventManager()
+    private lateinit var puzzleManager: NetworkEventManager
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
         return puzzleManager.receivedNetworkEvent(event)
@@ -52,9 +52,9 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
 
             bindSingleton(NumbersPuzzleState())
             bindSingleton(BombState())
-            if (lightSensor != null) {
-                bindSingleton(lightSensor)
-            }
+            bindSingleton(NetworkEventManager(inject()))
+            puzzleManager = inject()
+            lightSensor?.let { bindSingleton(it) }
 
             // The camera ensures we can render using our target resolution of 800x480
             // pixels no matter what the screen resolution is.
@@ -65,8 +65,8 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             addScreen(ConfigScreen(injectOptinal(), inject(), inject(), inject(), inject(), inject(), inject()))
             addScreen(InactiveScreen(injectOptinal(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
 
-            addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
-            addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
+            addPuzzle(LoginPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject()))
+            addPuzzle(NumberPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addPuzzle(EmptyPuzzleScreen(inject(), inject(), inject(), inject(), inject(), inject()))
 
             addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
@@ -77,8 +77,6 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             puzzleManager.addPuzzle(ResetPuzzle(inject(), inject(), inject<Countdown>()))
         }
         setScreen<LoadingScreen>()
-
-        //super.create()
     }
 
     override fun reset() {

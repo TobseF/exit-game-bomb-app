@@ -1,5 +1,7 @@
 package com.libktx.game.network
 
 interface NetworkEndpoint : NetworkDataProvider, NetworkEventListener {
-    val name: String
+    val name: Endpoint
+
+    fun request(data: String): PuzzleResponse
 }

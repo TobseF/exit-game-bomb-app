@@ -21,6 +21,7 @@ import ktx.graphics.use
  * Shows the NumbersPuzzle.
  */
 class NumberPuzzleScreen(game: Game,
+                         private val bombState: BombState,
                          batch: Batch,
                          shapeRenderer: ShapeRenderer,
                          assets: AssetManager,
@@ -28,6 +29,10 @@ class NumberPuzzleScreen(game: Game,
                          countdown: Countdown,
                          private val state: NumbersPuzzleState) :
         AbstractPuzzleScreen(Endpoint.Numbers, game, batch, assets, camera, shapeRenderer, countdown) {
+
+    override fun show() {
+        bombState.currentPuzzle = endpoint
+    }
 
     private val timer = Timer(2.5f, state::calculateNewNumbers)
 
@@ -46,12 +51,9 @@ class NumberPuzzleScreen(game: Game,
     }
 
     override fun switchToNextScreen() {
-        hide()
         countdown.stop()
         game.setScreen<SuccessScreen>()
     }
 
-    override fun show() {
 
-    }
 }

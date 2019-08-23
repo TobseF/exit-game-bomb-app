@@ -7,7 +7,7 @@ import com.libktx.game.network.PuzzleResponse
 /**
  * The player must provide the string `GOIN`
  */
-class LoginPuzzle : AbstractNetworkEndpoint(Endpoint.Connect.path) {
+class LoginPuzzle : AbstractNetworkEndpoint(Endpoint.Connect) {
 
     override fun request(data: String): PuzzleResponse {
         return if ("GOIN" == data.toUpperCase()) {

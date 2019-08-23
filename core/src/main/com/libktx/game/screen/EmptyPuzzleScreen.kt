@@ -15,6 +15,9 @@ import com.libktx.game.lib.draw
 import com.libktx.game.network.Endpoint
 import ktx.graphics.use
 
+/**
+ * Not active, can be used as place holder for the next puzzle.
+ */
 class EmptyPuzzleScreen(game: Game,
                         batch: Batch,
                         shapeRenderer: ShapeRenderer,
@@ -22,10 +25,7 @@ class EmptyPuzzleScreen(game: Game,
                         camera: OrthographicCamera,
                         countdown: Countdown) : AbstractPuzzleScreen(Endpoint.Empty, game, batch, assets, camera, shapeRenderer, countdown) {
 
-    override fun switchToNextScreen() {
-
-    }
-
+    override fun switchToNextScreen() {}
 
     override fun render(delta: Float) {
         super.render(delta)
@@ -36,12 +36,10 @@ class EmptyPuzzleScreen(game: Game,
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            hide()
             game.setScreen<LoginPuzzleScreen>()
         }
 
     }
 
-    override fun show() {
-    }
+    override fun show() {}
 }

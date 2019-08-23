@@ -21,12 +21,17 @@ import ktx.graphics.use
  * Shows the LoginPuzzle.
  */
 class LoginPuzzleScreen(game: Game,
+                        private val bombState: BombState,
                         batch: Batch,
                         shapeRenderer: ShapeRenderer,
                         assets: AssetManager,
                         camera: OrthographicCamera,
                         countdown: Countdown) :
         AbstractPuzzleScreen(Endpoint.Connect, game, batch, assets, camera, shapeRenderer, countdown) {
+
+    override fun show() {
+        bombState.currentPuzzle = endpoint
+    }
 
     override fun render(delta: Float) {
         super.render(delta)
@@ -47,7 +52,6 @@ class LoginPuzzleScreen(game: Game,
     }
 
     override fun switchToNextScreen() {
-        hide()
         game.setScreen<NumberPuzzleScreen>()
     }
 

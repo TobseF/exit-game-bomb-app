@@ -3,41 +3,56 @@ package com.libktx.game.network
 import com.libktx.game.network.NetworkEvent.EventType
 import com.libktx.game.puzzle.PuzzleResponseHandler
 import com.libktx.game.screen.AbstractPuzzleScreen
+import com.libktx.game.screen.BombState
 import ktx.log.logger
 
 private val log = logger<NetworkEventManager>()
 
-class NetworkEventManager : NetworkEventListener {
+class NetworkEventManager(private val bombState: BombState) : NetworkEventListener {
 
-    private val puzzles: MutableMap<String, AbstractNetworkEndpoint> = mutableMapOf()
-    private val puzzlesScreens: MutableMap<String, PuzzleResponseHandler> = mutableMapOf()
+    private val endpoints: MutableMap<Endpoint, NetworkEndpoint> = mutableMapOf()
+    private val puzzlesScreens: MutableMap<Endpoint, PuzzleResponseHandler> = mutableMapOf()
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
-        val puzzle = puzzles[event.endpoint]
-        if (puzzle != null) {
+        val endpoint = Endpoint[event.endpoint]
+        if (endpoint != null) {
+            if (bombState.isPuzzle(endpoint) && bombState.currentPuzzle != endpoint) {
+                log.info { "Trying to access inactive puzzle: $endpoint" }
+                return PuzzleResponse.FALSE
+            }
+            val networkEndpoint = endpoints[endpoint]
 
-            when (event.eventType) {
-                EventType.POST -> {
-                    val response: PuzzleResponse = puzzle.request(event.data)
-                    puzzlesScreens[event.endpoint]?.handlePuzzleResponse(response)
-                    return response
-                }
-                EventType.GET -> {
-                    return PuzzleResponse(puzzle.getPuzzleData(), ResponseStatus.OK)
-                }
+            return if (networkEndpoint != null) {
+                accessNetworkEndpoint(event, networkEndpoint, endpoint)
+            } else {
+                log.info { "Failed finding networkEndpoint for endpoint path: ${event.endpoint}" }
+                PuzzleResponse.FALSE
             }
         } else {
-            log.info { "Failed finding puzzle for endpoint path: ${event.endpoint}" }
+            log.info { "Failed finding Endpoint for path: ${event.endpoint}" }
             return PuzzleResponse.FALSE
         }
     }
 
+    private fun accessNetworkEndpoint(event: NetworkEvent, networkEndpoint: NetworkEndpoint, endpoint: Endpoint): PuzzleResponse {
+        return when (event.eventType) {
+            EventType.POST -> {
+                val response: PuzzleResponse = networkEndpoint.request(event.data)
+                puzzlesScreens[endpoint]?.handlePuzzleResponse(response)
+                response
+            }
+            EventType.GET -> {
+                PuzzleResponse(networkEndpoint.getPuzzleData(), ResponseStatus.OK)
+            }
+        }
+    }
+
     fun addPuzzle(endpoint: AbstractNetworkEndpoint) {
-        puzzles[endpoint.name] = endpoint
+        endpoints[endpoint.name] = endpoint
     }
 
     fun addPuzzleScreen(puzzle: AbstractPuzzleScreen) {
-        puzzlesScreens[puzzle.endpoint.path] = puzzle
+        puzzlesScreens[puzzle.endpoint] = puzzle
     }
 
 }

@@ -11,7 +11,7 @@ import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
-import com.libktx.game.lib.TimerFormatter
+import com.libktx.game.lib.TimeFormatter
 import com.libktx.game.lib.rect
 import com.libktx.game.network.Endpoint
 import com.libktx.game.network.hue.HueService
@@ -24,7 +24,7 @@ import java.util.*
  * Plays the explosion sound and displays a back screen with an "destroyed" message.
  */
 class ExplosionScreen(game: Game,
-                      val bombState: BombState,
+                      private val bombState: BombState,
                       batch: Batch,
                       private val hueService: HueService,
                       shapeRenderer: ShapeRenderer,
@@ -33,12 +33,15 @@ class ExplosionScreen(game: Game,
                       countdown: Countdown) : AbstractPuzzleScreen(Endpoint.GameOver, game, batch, assets, camera, shapeRenderer, countdown) {
 
 
+    private var explosionTimeStamp = getTimeStamp()
+
     override fun switchToNextScreen() {
         resetGame()
     }
 
     private fun resetGame() {
         bombState.reset()
+        explosionTimeStamp = getTimeStamp()
         game.reset()
     }
 
@@ -59,16 +62,17 @@ class ExplosionScreen(game: Game,
             font.color = Color.BLACK
             font.draw(it, "BOMB SYSTEM", 341f, 369f)
             font.color = Color.WHITE
-            font.draw(it, "A fatal explosion has occurred at " + getTimeStamp(), 50f, 250f)
+            font.draw(it, "A fatal explosion has occurred at $explosionTimeStamp", 50f, 250f)
             font.draw(it, "The current bomb was terminated.", 50f, 220f)
         }
 
     }
 
-    fun getTimeStamp() = TimerFormatter.getFormattedDateAsString(Date(countdown.getTime()))
+    private fun getTimeStamp() = TimeFormatter.getFormattedDateAsString(Date(countdown.getContdownTime()))
 
     override fun show() {
         assets[SoundAssets.BombExplosion].play()
         hueService.setLights(Red, OFF)
+        explosionTimeStamp = getTimeStamp()
     }
 }

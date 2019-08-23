@@ -11,7 +11,7 @@ import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
-import com.libktx.game.lib.TimerFormatter
+import com.libktx.game.lib.TimeFormatter
 import com.libktx.game.lib.draw
 import com.libktx.game.lib.drawWithShadow
 import com.libktx.game.network.Endpoint
@@ -31,13 +31,11 @@ class SuccessScreen(game: Game,
 
 
     override fun switchToNextScreen() {
-        hide()
         game.setScreen<ExplosionScreen>()
     }
 
-
     override fun checkCountdown() {
-        // We already exploded
+        // We got it - we can stop
     }
 
     override fun render(delta: Float) {
@@ -56,5 +54,5 @@ class SuccessScreen(game: Game,
         hueService.setLights(HueValue.Green, ON)
     }
 
-    private fun getTimeAsString() = TimerFormatter.getFormattedTimeAsString(countdown.getContdownTime())
+    private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getContdownTime())
 }

@@ -10,7 +10,7 @@ import com.libktx.game.screen.BombState
 /**
  * Endpoint which resets the game with the command `TURN IT OFF AND ON AGAIN`
  */
-class ResetPuzzle(val game: Game, val bombState: BombState, val countdown: Resetable) : AbstractNetworkEndpoint(Endpoint.Reset.path), Resetable {
+class ResetPuzzle(val game: Game, private val bombState: BombState, val countdown: Resetable) : AbstractNetworkEndpoint(Endpoint.Reset), Resetable {
 
     override fun reset() {
         game.reset()

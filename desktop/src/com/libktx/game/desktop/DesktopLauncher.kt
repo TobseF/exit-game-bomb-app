@@ -15,6 +15,7 @@ object DesktopLauncher {
             title = "Bomb"
             width = Config.screenSize.width.toInt()
             height = Config.screenSize.height.toInt()
+            resizable = false
             samples = 3
             addIcon(Icons.AppIcon16)
             addIcon(Icons.AppIcon64)

@@ -32,7 +32,7 @@ import ktx.vis.table
 
 /**
  * Config screen for the basic settings.
- * Shows some info like the bombs IP address.
+ * Also shows some info, like the bombs IP address.
  */
 class ConfigScreen(private val lightSensor: ILightSensor? = null,
                    private val hueService: HueService,
@@ -179,7 +179,6 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
 
         Gdx.app.input.inputProcessor = stage
         stage.addActor(table)
-        //stage.isDebugAll = true
         stage.viewport.centerCamera()
     }
 

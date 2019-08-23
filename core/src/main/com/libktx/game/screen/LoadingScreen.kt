@@ -62,7 +62,6 @@ class LoadingScreen(private val game: Game,
         }
 
         if (triggeredNextScreen()) {
-            hide()
             game.setScreen<ConfigScreen>()
         }
     }

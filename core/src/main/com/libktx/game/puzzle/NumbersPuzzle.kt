@@ -8,7 +8,7 @@ import com.libktx.game.network.ResponseStatus
 /**
  * The player must provide a string with all current numbers, sorted in the correct way. Each number has 4 digits, they are sorted ascending.
  */
-class NumbersPuzzle(private val state: NumbersPuzzleState) : AbstractNetworkEndpoint(Endpoint.Numbers.path) {
+class NumbersPuzzle(private val state: NumbersPuzzleState) : AbstractNetworkEndpoint(Endpoint.Numbers) {
 
     override fun request(data: String): PuzzleResponse {
         return if (isValidNumber(data)) {
