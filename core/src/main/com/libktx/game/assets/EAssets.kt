@@ -10,7 +10,7 @@ import ktx.assets.load
 enum class SoundAssets(val path: String) {
     MessageRight("sounds/correct_message.mp3"),
     MessageWrong("sounds/wrong_message.mp3"),
-    BombActivated("sounds/bomb_activated.mp3"),
+    BombActivated("sounds/bomb_activated_voice.mp3"),
     BombDeactivated("sounds/bomb_deactivated.mp3"),
     BombExplosion("sounds/bomb_explosion.mp3")
 }
