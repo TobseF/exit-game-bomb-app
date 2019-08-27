@@ -56,7 +56,7 @@ class SuccessScreen(game: Game,
 
         assets[SoundAssets.BombDeactivated].play()
         hueService.setLights(HueValue.Green, ON)
-        timerService.stop(countdown.getContdownTime())
+        timerService.stop(countdown.getCountdownTime())
     }
 
     /**
@@ -67,5 +67,5 @@ class SuccessScreen(game: Game,
         (0..9).forEach { counterFont.setFixedWidthGlyphs(it.toString()) }
     }
 
-    private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getContdownTime())
+    private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getCountdownTime())
 }

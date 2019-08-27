@@ -74,7 +74,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
         val sound = assets[SoundAssets.BombActivated]
         sound.play()
         blinkLights()
-        timerService.start(countdown.getContdownTime())
+        timerService.start(countdown.getCountdownTime())
 
         bombState.activateBomb()
         switchToFirstPuzzle()

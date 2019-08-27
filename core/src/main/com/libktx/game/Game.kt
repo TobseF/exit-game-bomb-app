@@ -7,6 +7,9 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.kotcrab.vis.ui.VisUI
+import com.libktx.game.endpoint.InfoEndpoint
+import com.libktx.game.endpoint.ResetEndpoint
+import com.libktx.game.endpoint.StopEndpoint
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.GameContext
 import com.libktx.game.lib.Resetable
@@ -21,7 +24,6 @@ import com.libktx.game.network.services.TimerService
 import com.libktx.game.puzzle.LoginPuzzle
 import com.libktx.game.puzzle.NumbersPuzzle
 import com.libktx.game.puzzle.NumbersPuzzleState
-import com.libktx.game.puzzle.ResetPuzzle
 import com.libktx.game.screen.*
 import ktx.app.KtxGame
 import ktx.app.KtxScreen
@@ -50,7 +52,7 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             bindSingleton(BitmapFont())
             bindSingleton(AssetManager())
             bindSingleton(ShapeRenderer())
-            bindSingleton(Countdown(minutes = Config.countdownTime))
+            bindSingleton(Countdown(minutes = Preferences.countdownTime))
             bindSingleton(HueService())
             bindSingleton(TimerService())
 
@@ -75,15 +77,21 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addScreen(SuccessScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
 
-            puzzleManager.addPuzzle(LoginPuzzle())
-            puzzleManager.addPuzzle(NumbersPuzzle(inject()))
-            puzzleManager.addPuzzle(ResetPuzzle(inject(), inject(), inject<Countdown>()))
+            puzzleManager.addEndpoint(LoginPuzzle())
+            puzzleManager.addEndpoint(NumbersPuzzle(inject()))
+            puzzleManager.addEndpoint(ResetEndpoint(inject(), inject(), inject()))
+            puzzleManager.addEndpoint(InfoEndpoint(inject(), inject()))
+            puzzleManager.addEndpoint(StopEndpoint(inject(), inject()))
         }
         setScreen<LoadingScreen>()
     }
 
     override fun reset() {
         setScreen<InactiveScreen>()
+    }
+
+    fun stop() {
+        setScreen<SuccessScreen>()
     }
 
     private inline fun <reified Type : AbstractPuzzleScreen> addPuzzle(puzzleScreen: Type) {

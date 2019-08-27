@@ -19,7 +19,7 @@ import com.libktx.game.Game
 import com.libktx.game.Preferences
 import com.libktx.game.lib.addValueChangeListener
 import com.libktx.game.lib.bind
-import com.libktx.game.lib.rect
+import com.libktx.game.lib.bindInt
 import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.lib.setClickListener
 import com.libktx.game.network.Network
@@ -27,7 +27,6 @@ import com.libktx.game.network.services.HueService
 import com.libktx.game.network.services.HueService.HueValue
 import com.libktx.game.network.services.HueService.LightState.OFF
 import com.libktx.game.network.services.HueService.LightState.ON
-import ktx.graphics.use
 import ktx.vis.table
 
 /**
@@ -50,9 +49,7 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
 
     override fun render(delta: Float) {
         super.render(delta)
-        shapeRenderer.use(ShapeRenderer.ShapeType.Filled) {
-            it.rect(Color.LIGHT_GRAY, 0f, 0f, Config.screenSize.width, Config.screenSize.height)
-        }
+        clearScreen(Color.LIGHT_GRAY)
 
         if (lightSensor != null) {
             val currentLux = lightSensor.getCurrentLux()
@@ -92,12 +89,17 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
                 isDisabled = true
             }.cell(grow = true)
 
-            row()
-
-            label("Bomb Port:")
             textField(Config.ServerPort.toString()) {
                 isDisabled = true
             }.cell(grow = true)
+
+            row()
+
+            label("Bomb Time:")
+            textField(Preferences.countdownTime.toString()) {
+                bindInt(Preferences::countdownTime)
+            }.cell(grow = true)
+            row()
 
             row()
 

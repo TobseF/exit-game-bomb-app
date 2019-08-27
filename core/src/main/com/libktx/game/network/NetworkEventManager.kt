@@ -47,7 +47,7 @@ class NetworkEventManager(private val bombState: BombState) : NetworkEventListen
         }
     }
 
-    fun addPuzzle(endpoint: AbstractNetworkEndpoint) {
+    fun addEndpoint(endpoint: AbstractNetworkEndpoint) {
         endpoints[endpoint.name] = endpoint
     }
 

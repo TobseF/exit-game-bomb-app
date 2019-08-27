@@ -3,10 +3,8 @@ package com.libktx.game
 object Config {
     const val ServerPort = 5000
     const val TimerPort = 5001
-    /**
-     * Time in minutes of a game
-     */
-    const val countdownTime = 20
+
+    const val defaultCountDownTime = 42
 
     const val appIdentifier = "de.its.game.bomb"
 

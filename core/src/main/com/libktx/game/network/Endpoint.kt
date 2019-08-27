@@ -4,7 +4,7 @@ package com.libktx.game.network
  * Paths for the REST endpoints. The lowercase name will be used as path.
  */
 enum class Endpoint {
-    Connect, Numbers, GameOver, Reset, Empty;
+    Connect, Numbers, GameOver, Reset, Stop, Info, Empty;
 
     companion object {
         private val pathToEndpoint = values().map { it.path to it }.toMap()

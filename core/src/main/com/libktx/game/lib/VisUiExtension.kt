@@ -13,6 +13,10 @@ fun VisTextField.bind(property: KMutableProperty0<String?>) {
     bind { property.set(it) }
 }
 
+fun VisTextField.bindInt(property: KMutableProperty0<Int>) {
+    bind { property.set(it.toInt()) }
+}
+
 fun VisTextField.bind(setter: (String) -> Unit) {
     setTextFieldListener { textField, _ ->
         setter.invoke(textField.text)

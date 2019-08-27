@@ -1,19 +1,19 @@
 package com.libktx.game
 
 import com.badlogic.gdx.Gdx
-import com.libktx.game.Preferences.Preference.*
+import com.libktx.game.Preferences.PreferenceKey.*
 import kotlin.reflect.KProperty
 
 object Preferences {
 
     private val preferences = Gdx.app.getPreferences(Config.appIdentifier)
 
-    private enum class Preference { HueIP, HueRoomName, HueApiKey, TimerIp }
+    private enum class PreferenceKey { HueIP, HueRoomName, HueApiKey, TimerIp, CountDownTime }
 
-    private fun get(preference: Preference): String? = preferences.getString(preference.name)
-    private fun get(preference: Preference, default: String): String = preferences.getString(preference.name, default)
+    private fun get(preference: PreferenceKey): String? = preferences.getString(preference.name)
+    private fun get(preference: PreferenceKey, default: String): String = preferences.getString(preference.name, default)
 
-    private fun save(preference: Preference, value: String?) {
+    private fun save(preference: PreferenceKey, value: String?) {
         if (value == null) {
             preferences.remove(preference.name)
         } else {
@@ -22,15 +22,20 @@ object Preferences {
         }
     }
 
-    var hueIp: String? by Delegate(HueIP)
+    var hueIp: String? by Preference(HueIP)
 
-    var hueRoomName: String? by Delegate(HueRoomName)
+    var hueRoomName: String? by Preference(HueRoomName)
 
-    var hueApiKey: String? by Delegate(HueApiKey)
+    var hueApiKey: String? by Preference(HueApiKey)
 
-    var timerIp: String? by Delegate(TimerIp)
+    var timerIp: String? by Preference(TimerIp)
 
-    private class Delegate(private val prefKey: Preference) {
+    /**
+     * Time in minutes of a game
+     */
+    var countdownTime: Int by PreferenceInt(CountDownTime, Config.defaultCountDownTime)
+
+    private class Preference(private val prefKey: PreferenceKey) {
 
         operator fun getValue(thisRef: Any?, property: KProperty<*>): String? {
             val value = get(prefKey)
@@ -43,6 +48,17 @@ object Preferences {
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: String?) {
             save(prefKey, value)
+        }
+    }
+
+    private class PreferenceInt(private val prefKey: PreferenceKey, val default: Int) {
+
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): Int {
+            return preferences.getInteger(prefKey.name, default)
+        }
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
+            preferences.putInteger(prefKey.name, value)
         }
     }
 }

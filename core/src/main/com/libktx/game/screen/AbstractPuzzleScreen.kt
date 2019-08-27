@@ -26,7 +26,7 @@ import ktx.graphics.use
 
 /**
  * Renders a timer.
- * A new puzzle can added by [NetworkEventManager.addPuzzle].
+ * A new puzzle can added by [NetworkEventManager.addEndpoint].
  * To ensure the solving order it's endpoint also needs to bee added to the [BombState.puzzles] list.
  */
 abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: Game,
@@ -86,7 +86,7 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
 
     }
 
-    private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getContdownTime())
+    private fun getTimeAsString() = TimeFormatter.getFormattedTimeAsString(countdown.getCountdownTime())
 
     override fun show() {}
 }
