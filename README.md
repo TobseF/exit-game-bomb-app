@@ -39,10 +39,11 @@ _IntelliJ > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gra
 ## 💡 External Hardware
 💡 The comb can be paired with external Hardware. It connects to a Phillips Hue bridge and controls lights.
 So lights switch to ![RED](https://placehold.it/15/f03c15/000000?text=+) if the bomb gets activated and to 
-![GREEN](https://placehold.it/15/c5f015/000000?text=+) if it gets disarmed. See `HueService` for details.
+![GREEN](https://placehold.it/15/c5f015/000000?text=+) if it gets disarmed.
+See `HueService` or [yetanotherhueapi](https://github.com/TobseF/yetanotherhueapi) for details.
 
 🔊 To bomb also plays audio files, so it may be a good idea to connect it with an external Bluetooth speaker.
-
+📱
 ⏰ The bomb can connect to an external 7-segment hardware timer. See `TimerService` for details.
 
 ## ⌨ Controls
@@ -93,6 +94,18 @@ Exception in thread "LWJGL Application" com.badlogic.gdx.utils.GdxRuntimeExcepti
 Couldn't load file: icons/icon_16.png
 ```
 You forgot to to set the _Working directory_ of the _Run Configuration_ to  `${your-path}\bomb-app\android\assets`. 
+
+---
+
+```
+Could not resolve all files for configuration ':core:compileClasspath'.
+   > Could not find io.github.tobsef:yetanotherhueapi:1.3.0.
+```
+
+You need the [yetanotherhueapi](https://github.com/TobseF/yetanotherhueapi) maven dependency. For now it may be not present int the maven central.
+So check it out and manual install it with:  
+`git clone https://github.com/TobseF/yetanotherhueapi.git`  
+`mvn install -DskipTests`  
 
 ---
 
