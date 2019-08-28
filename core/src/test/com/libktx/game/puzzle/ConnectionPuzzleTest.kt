@@ -9,12 +9,12 @@ import io.kotlintest.specs.FunSpec
 internal class ConnectionPuzzleTest : FunSpec({
 
     test("Solve login puzzle by 'goin'") {
-        LoginPuzzle().request("goin") shouldBe PuzzleResponse.OK
+        ConnectPuzzle().request("goin") shouldBe PuzzleResponse.OK
     }
 
     test("Fail the login puzzle") {
-        LoginPuzzle().request("connect") shouldBe PuzzleResponse.FALSE
-        LoginPuzzle().request("login") shouldBe PuzzleResponse.FALSE
+        ConnectPuzzle().request("connect") shouldBe PuzzleResponse.FALSE
+        ConnectPuzzle().request("login") shouldBe PuzzleResponse.FALSE
     }
 
 })

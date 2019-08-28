@@ -136,7 +136,7 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
                 setClickListener { Preferences.debug = isChecked }
             }.cell(colspan = 2)
             row()
-            textButton("Reset") {
+            textButton("Reset Hue") {
                 setClickListener { resetHueSettings() }
             }.cell(fill = true)
             row()

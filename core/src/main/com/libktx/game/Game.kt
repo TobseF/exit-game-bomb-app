@@ -21,7 +21,7 @@ import com.libktx.game.network.NetworkEventManager
 import com.libktx.game.network.PuzzleResponse
 import com.libktx.game.network.services.HueService
 import com.libktx.game.network.services.TimerService
-import com.libktx.game.puzzle.LoginPuzzle
+import com.libktx.game.puzzle.ConnectPuzzle
 import com.libktx.game.puzzle.NumbersPuzzle
 import com.libktx.game.puzzle.NumbersPuzzleState
 import com.libktx.game.screen.*
@@ -77,7 +77,7 @@ class Game(private val lightSensor: ILightSensor? = null) : KtxGame<KtxScreen>()
             addScreen(ExplosionScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
             addScreen(SuccessScreen(inject(), inject(), inject(), inject(), inject(), inject(), inject(), inject()))
 
-            puzzleManager.addEndpoint(LoginPuzzle())
+            puzzleManager.addEndpoint(ConnectPuzzle())
             puzzleManager.addEndpoint(NumbersPuzzle(inject()))
             puzzleManager.addEndpoint(ResetEndpoint(inject(), inject(), inject()))
             puzzleManager.addEndpoint(InfoEndpoint(inject(), inject()))
