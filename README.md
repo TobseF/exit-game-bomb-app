@@ -1,3 +1,6 @@
+[![Kotlin](https://img.shields.io/badge/kotlin-1.3.41-orange.svg)](http://kotlinlang.org/)
+[![Kotlin-Coroutines](https://img.shields.io/badge/kotlin--coroutines-1.3.0--RC2-orange.svg)](http://kotlinlang.org/)
+[![LibGDX](https://img.shields.io/badge/libgdx-1.9.10-red.svg)](https://libgdx.badlogicgames.com/)
 # 💣 ExitGame Bomb - Android App
  
 This bomb is part of an **ExitGame** where payers have to deactivate a bomb by coding challenges.
