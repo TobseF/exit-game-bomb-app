@@ -19,7 +19,7 @@ The players solve the puzzle by trigger unit tests which access the bombs REST A
 
 ## 🚀 Start
 The App runs on Android and Desktop. So you can run, test and develop it without an Android device or emulator.
-To start the app run the Gradle task:
+To start the app run the _Gradle_ task:
 
 * **Run Desktop:** _desktop > Tasks > other > run_
 * **Run Android:** _android > Tasks > other > run_
@@ -43,36 +43,36 @@ So lights switch to ![RED](https://placehold.it/15/f03c15/000000?text=+) if the 
 See `HueService` or [yetanotherhueapi](https://github.com/TobseF/yetanotherhueapi) for details.
 
 🔊 To bomb also plays audio files, so it may be a good idea to connect it with an external Bluetooth speaker.
-📱
+
 ⏰ The bomb can connect to an external 7-segment hardware timer. See `TimerService` for details.
 
 ## ⌨ Controls
 Available if _debug_ switch is on:
-* Press <kbd>Space</kbd> to switch to the next screen.
+* Press <kbd>Space</kbd> or **touch** ste screen to switch to the next screen.
 * Press <kbd>Enter</kbd> to trigger an action on a screen.
+
+## 🔧 Config
+The settings screen allows you to change the bombs configuration.
+
+|  Setting    |                         Description                                     |
+|-------------|:------------------------------------------------------------------------|
+| Bomb time * | The time before the bomb explodes in minutes.                           |
+| Timer IP    | IP Address of the external timer.                                       |
+| Hue IP      | IP Address of Phillips Hue bridge.                                      |
+| Hue Room    | Name of the Room with the Hue Lights. Change it in the Phillips Hue App.|
+| Hue Key     | API Key from a paired HUE. Pair the Hue to retrieve it.                 |
+| Debug       | If selected, you can switch the screens by <kbd>Space</kbd> or touch.   |
+|  \* The _Bomb time_ can be also changed by the REST interface.                        | 
+
 
 |  Button   |                         Description                                |
 |-----------|:-------------------------------------------------------------------|
 | Reset Hue | Clear the Hue API key, so you have to pair the  Hue again.         |
 | Pair      | Pair the bomb with the Phillips Hue bridge. Creates a new API key. |
 | Start     | Start the bomb in inactive mode.                                   |
-
-
-## 🔧 Config
-The settings screen allows to change the bombs configuration.
-
-|  Setting    |                         Description                                     |
-|-------------|:------------------------------------------------------------------------|
-| Bomb time * | The time before the bomb explodes in minutes.                           |
-| Timer IP    | IP Address of the external timer                                        |
-| Hue IP      | IP Address of Phillips Hue bridge                                       |
-| Hue Room    | Name of the Room with the Hue Lights. Change it in the Phillips Hue App |
-| Hue Key     | API Key from a paired HUE. Pair the Hue to retrieve it.                 |
-| Debug       | If selected, you can switch the screens by <kbd>Space</kbd> or touch.   |
-|  \* The _Bomb time_ can be also changed by the REST interface.                        | 
  
 ## 🔌 Endpoints
-The bomb can be controlled on with a REST endpoint on port `5000`.
+The bomb can be controlled by a REST endpoint on port `5000`.
 
 |  Endpoint | Type |                       Description                                  |
 |-----------|:----:|:-------------------------------------------------------------------|
