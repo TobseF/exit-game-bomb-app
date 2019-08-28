@@ -89,7 +89,7 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
                 isDisabled = true
             }.cell(grow = true)
 
-            textField(Config.ServerPort.toString()) {
+            textField(Config.serverPort.toString()) {
                 isDisabled = true
             }.cell(grow = true)
 
@@ -130,6 +130,10 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             val pairedCheckBox = checkBox("Paired") {
                 isDisabled = true
                 isChecked = hueService.isPaired()
+            }.cell(colspan = 2)
+            checkBox("Debug") {
+                isChecked = Preferences.debug
+                setClickListener { Preferences.debug = isChecked }
             }.cell(colspan = 2)
             row()
             textButton("Reset") {

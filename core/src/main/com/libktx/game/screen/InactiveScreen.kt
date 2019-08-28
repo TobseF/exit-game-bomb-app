@@ -62,10 +62,14 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
      * Checks if the bomb was activated by an external light source
      */
     private fun tryToActivateBomb() {
-        if (lightSensor != null && activeTimer.isFinished() && bombState.isBombNotActivated() && lightSensor.getCurrentLux() > 1) {
-            activateBomb()
+        if (activeTimer.isFinished() && bombState.isBombNotActivated()) {
+            if (isInBrightEnvironment(lightSensor)) {
+                activateBomb()
+            }
         }
     }
+
+    private fun isInBrightEnvironment(lightSensor: ILightSensor?) = lightSensor == null || lightSensor.getCurrentLux() > 1
 
     /**
      * Play an alarm sound when the bomb gets activated by light. Changes the hue lights to red

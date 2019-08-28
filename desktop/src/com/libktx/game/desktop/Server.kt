@@ -26,7 +26,7 @@ class Server(private val listener: NetworkEventListener) : HttpHandler {
 
     fun start() {
         val server = Undertow.builder()
-                .addHttpListener(Config.ServerPort, "localhost")
+                .addHttpListener(Config.serverPort, "localhost")
                 .setHandler(BlockingHandler(this)).build()
         server.start()
     }

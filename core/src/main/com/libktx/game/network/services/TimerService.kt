@@ -20,7 +20,7 @@ class TimerService {
 
     private val executor = newSingleThreadAsyncContext()
 
-    private fun getPath(endpoint: String) = "http://${Preferences.timerIp}:${Config.TimerPort}/$endpoint"
+    private fun getPath(endpoint: String) = "http://${Preferences.timerIp}:${Config.timerPort}/$endpoint"
 
     /**
      * Start's the timer

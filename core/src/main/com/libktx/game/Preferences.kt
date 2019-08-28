@@ -4,11 +4,15 @@ import com.badlogic.gdx.Gdx
 import com.libktx.game.Preferences.PreferenceKey.*
 import kotlin.reflect.KProperty
 
+/**
+ * Mutable settings which are stored on filesystem
+ * @see [Config]
+ */
 object Preferences {
 
     private val preferences = Gdx.app.getPreferences(Config.appIdentifier)
 
-    private enum class PreferenceKey { HueIP, HueRoomName, HueApiKey, TimerIp, CountDownTime }
+    private enum class PreferenceKey { HueIP, HueRoomName, HueApiKey, TimerIp, CountDownTime, Debug }
 
     private fun get(preference: PreferenceKey): String? = preferences.getString(preference.name)
     private fun get(preference: PreferenceKey, default: String): String = preferences.getString(preference.name, default)
@@ -29,6 +33,8 @@ object Preferences {
     var hueApiKey: String? by Preference(HueApiKey)
 
     var timerIp: String? by Preference(TimerIp)
+
+    var debug: Boolean by PreferenceBoolean(Debug)
 
     /**
      * Time in minutes of a game
@@ -59,6 +65,17 @@ object Preferences {
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
             preferences.putInteger(prefKey.name, value)
+        }
+    }
+
+    private class PreferenceBoolean(private val prefKey: PreferenceKey, val default: Boolean = false) {
+
+        operator fun getValue(thisRef: Any?, property: KProperty<*>): Boolean {
+            return preferences.getBoolean(prefKey.name, default)
+        }
+
+        operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
+            preferences.putBoolean(prefKey.name, value)
         }
     }
 }

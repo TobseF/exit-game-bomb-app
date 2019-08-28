@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Game
+import com.libktx.game.Preferences
 import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
@@ -53,11 +54,11 @@ abstract class AbstractPuzzleScreen(val endpoint: Endpoint, protected val game: 
         renderCountdown()
         checkCountdown()
 
-        checkInput()
+        switchScreenForDebug()
     }
 
-    private fun checkInput() {
-        if (Gdx.input.isKeyJustPressed(SPACE) || Gdx.input.justTouched()) {
+    private fun switchScreenForDebug() {
+        if (Preferences.debug && (Gdx.input.isKeyJustPressed(SPACE) || Gdx.input.justTouched())) {
             switchToNextScreen()
         }
     }

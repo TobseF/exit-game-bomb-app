@@ -52,7 +52,7 @@ class LoadingScreen(private val game: Game,
             font.draw(it, Color.BLACK, "BombApp ", 100f, 200f)
 
             font.color = Color.WHITE
-            font.draw(it, "IP: ${Network.ipAddress} Port: ${Config.ServerPort}", 100f, 150f)
+            font.draw(it, "IP: ${Network.ipAddress} Port: ${Config.serverPort}", 100f, 150f)
 
             if (assets.isFinished) {
                 font.draw(it, "Tap anywhere to start!", 100f, 100f)

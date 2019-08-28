@@ -1,9 +1,16 @@
 package com.libktx.game
 
+/**
+ * Configuration constants
+ * @see [Preferences]
+ */
 object Config {
-    const val ServerPort = 5000
-    const val TimerPort = 5001
+    const val serverPort = 5000
+    const val timerPort = 5001
 
+    /**
+     * Default time before the bomb explodes in minutes
+     */
     const val defaultCountDownTime = 42
 
     const val appIdentifier = "de.its.game.bomb"

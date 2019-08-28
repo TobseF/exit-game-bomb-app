@@ -35,7 +35,7 @@ class Server(private val listener: NetworkEventListener) {
             response.send(puzzleResponse.data)
         }
 
-        server.listen(Config.ServerPort)
+        server.listen(Config.serverPort)
     }
 
     fun parseRequest(eventType: NetworkEvent.EventType, request: AsyncHttpServerRequest): NetworkEvent {
