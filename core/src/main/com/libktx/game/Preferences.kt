@@ -12,7 +12,7 @@ object Preferences {
 
     private val preferences = Gdx.app.getPreferences(Config.appIdentifier)
 
-    private enum class PreferenceKey { HueIP, HueRoomName, HueApiKey, TimerIp, CountDownTime, Debug }
+    private enum class PreferenceKey { HueIP, HueRoomName, HueApiKey, TimerIp, CountDownTime, Debug, EnableExternalTimer }
 
     private fun get(preference: PreferenceKey): String? = preferences.getString(preference.name)
     private fun get(preference: PreferenceKey, default: String): String = preferences.getString(preference.name, default)
@@ -35,6 +35,8 @@ object Preferences {
     var timerIp: String? by Preference(TimerIp)
 
     var debug: Boolean by PreferenceBoolean(Debug)
+
+    var enableExternalTimer: Boolean by PreferenceBoolean(EnableExternalTimer)
 
     /**
      * Time in minutes of a game

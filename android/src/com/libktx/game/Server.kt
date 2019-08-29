@@ -38,8 +38,13 @@ class Server(private val listener: NetworkEventListener) {
         server.listen(Config.serverPort)
     }
 
-    fun parseRequest(eventType: NetworkEvent.EventType, request: AsyncHttpServerRequest): NetworkEvent {
-        return NetworkEvent(endpointPath = request.path, eventType = eventType, data = request.body.get().toString())
+    private fun parseRequest(eventType: NetworkEvent.EventType, request: AsyncHttpServerRequest): NetworkEvent {
+        val body = request.body.get()
+        return if (body == null) {
+            log.info { "Request $eventType without body: $request.path" }
+            NetworkEvent(endpointPath = request.path, eventType = eventType)
+        } else {
+            NetworkEvent(endpointPath = request.path, eventType = eventType, data = body.toString())
+        }
     }
-
 }

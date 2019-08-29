@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.Game
+import com.libktx.game.Preferences
 import com.libktx.game.assets.FontAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
@@ -56,7 +57,9 @@ class SuccessScreen(game: Game,
 
         assets[SoundAssets.BombDeactivated].play()
         hueService.setLights(HueValue.Green, ON)
-        timerService.stop(countdown.getCountdownTime())
+        if(Preferences.enableExternalTimer){
+            timerService.stop(countdown.getCountdownTime())
+        }
     }
 
     /**

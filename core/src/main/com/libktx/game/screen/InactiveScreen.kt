@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.Game
+import com.libktx.game.Preferences
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
@@ -78,7 +79,9 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
         val sound = assets[SoundAssets.BombActivated]
         sound.play()
         blinkLights()
-        timerService.start(countdown.getCountdownTime())
+        if(Preferences.enableExternalTimer){
+            timerService.start(countdown.getCountdownTime())
+        }
 
         bombState.activateBomb()
         switchToFirstPuzzle()
@@ -110,7 +113,9 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
     override fun show() {
         activeTimer.reset()
         hueService.setLights(HueValue.White, ON, 85)
-        timerService.disable()
+        if(Preferences.enableExternalTimer){
+            timerService.disable()
+        }
     }
 
     override fun render(delta: Float) {
