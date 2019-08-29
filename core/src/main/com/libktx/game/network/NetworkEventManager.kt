@@ -15,9 +15,10 @@ class NetworkEventManager(private val bombState: BombState) : NetworkEventListen
 
     override fun receivedNetworkEvent(event: NetworkEvent): PuzzleResponse {
         val endpoint = Endpoint[event.endpoint]
+        log.info { "Received network event: $event" }
         if (endpoint != null) {
             if (bombState.isPuzzle(endpoint) && bombState.currentPuzzle != endpoint) {
-                log.info { "Trying to access inactive puzzle: $endpoint" }
+                log.error { "Trying to access inactive puzzle: $endpoint" }
                 return PuzzleResponse.FALSE
             }
             val networkEndpoint = endpoints[endpoint]
@@ -25,11 +26,11 @@ class NetworkEventManager(private val bombState: BombState) : NetworkEventListen
             return if (networkEndpoint != null) {
                 accessNetworkEndpoint(event, networkEndpoint, endpoint)
             } else {
-                log.info { "Failed finding networkEndpoint for endpoint path: ${event.endpoint}" }
+                log.error { "Failed finding networkEndpoint for endpoint path: ${event.endpoint}" }
                 PuzzleResponse.FALSE
             }
         } else {
-            log.info { "Failed finding Endpoint for path: ${event.endpoint}" }
+            log.error { "Failed finding Endpoint for path: ${event.endpoint}" }
             return PuzzleResponse.FALSE
         }
     }
