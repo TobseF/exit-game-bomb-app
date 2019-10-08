@@ -4,13 +4,15 @@
 
     <uses-feature android:name="android.hardware.sensor.light"/>
 
+    <uses-permission android:name="android.permission.INTERNET"/>
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:isGame="true"
-        android:appCategory="game"
-        android:label="@string/app_name"
-        android:theme="@style/GdxTheme" >
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:isGame="true"
+            android:appCategory="game"
+            android:label="@string/app_name"
+            android:theme="@style/GdxTheme"
+            android:usesCleartextTraffic="true">
         <activity
             android:name="com.libktx.game.AndroidLauncher"
             android:label="@string/app_name" 
