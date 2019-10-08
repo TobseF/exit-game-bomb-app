@@ -4,7 +4,6 @@ import com.libktx.game.Config
 import com.libktx.game.Preferences
 import com.libktx.game.network.NetworkEvent.EventType
 import com.libktx.game.network.NetworkEvent.EventType.GET
-import com.libktx.game.network.NetworkEvent.EventType.POST
 import kotlinx.coroutines.launch
 import ktx.async.KtxAsync
 import ktx.async.httpRequest
@@ -20,6 +19,8 @@ class TimerService {
 
     private val executor = newSingleThreadAsyncContext()
 
+    private fun getPath(endpoint: String, time: Long) = getPath(endpoint) + "?time=$time"
+
     private fun getPath(endpoint: String) = "http://${Preferences.timerIp}:${Config.timerPort}/$endpoint"
 
     /**
@@ -27,18 +28,18 @@ class TimerService {
      * @param time in milliseconds
      */
     fun start(time: Long) {
-        val path = getPath("start")
+        val path = getPath("start", time)
         log.info { "Start external timer with $time ms on: $path" }
-        asyncHttpRequest(path, POST, time.toString())
+        asyncHttpRequest(path)
     }
 
     /**
      * Stops the timer and displays the finish time
      */
     fun stop(time: Long) {
-        val path = getPath("stop")
+        val path = getPath("stop", time)
         log.info { "Stop external timer with $time ms on: $path" }
-        asyncHttpRequest(path, POST, time.toString())
+        asyncHttpRequest(path)
     }
 
     /**
@@ -47,11 +48,10 @@ class TimerService {
     fun disable() {
         val path = getPath("disable")
         log.info { "Stop external timer on: $path" }
-
-        asyncHttpRequest(path, GET)
+        asyncHttpRequest(path)
     }
 
-    private fun asyncHttpRequest(url: String, type: EventType, content: String? = null) {
+    private fun asyncHttpRequest(url: String, type: EventType = GET, content: String? = null) {
         KtxAsync.launch(executor) {
             try {
                 val response = httpRequest(url = url, content = content, method = type.toString())
