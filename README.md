@@ -1,7 +1,8 @@
-[![Kotlin](https://img.shields.io/badge/kotlin-1.3.41-orange.svg)](http://kotlinlang.org/)
-[![Kotlin-Coroutines](https://img.shields.io/badge/kotlin--coroutines-1.3.0--RC2-orange.svg)](http://kotlinlang.org/)
-[![LibGDX](https://img.shields.io/badge/libgdx-1.9.10-red.svg)](https://libgdx.badlogicgames.com/)
 # 💣 ExitGame Bomb - Android App
+
+[![Kotlin](https://img.shields.io/badge/Kotlin-1.3.40-blue.svg?style=flat&logo=kotlin&logoColor=white)](http://kotlinlang.org)
+[![Kotlin-Coroutines](https://img.shields.io/badge/Kotlin--Coroutines-1.3.0--RC2-orange.svg)](https://kotlinlang.org/docs/reference/coroutines-overview.html)
+[![LibGDX](https://img.shields.io/badge/LibGDX-1.9.10-red.svg)](https://libgdx.badlogicgames.com/news.html)
  
 This bomb is part of an **ExitGame** where payers have to deactivate a bomb by coding challenges.
 
@@ -47,7 +48,9 @@ See `HueService` or [yetanotherhueapi](https://github.com/TobseF/yetanotherhueap
 
 🔊 To bomb also plays audio files, so it may be a good idea to connect it with an external Bluetooth speaker.
 
-⏰ The bomb can connect to an external 7-segment hardware timer. See `TimerService` for details.
+⏰ The bomb can connect to an external Arduino hardware based 7-segment countdown timer.   
+  This optional project is available here: [Arduino-Countdown-Timer](https://github.com/TobseF/Arduino-Countdown-Timer/tree/master).
+  See `TimerService` for interface details.
 
 ## ⌨ Controls
 Available if _debug_ switch is on:
@@ -62,7 +65,7 @@ The settings screen allows you to change the bombs configuration.
 | Bomb time * | The time before the bomb explodes in minutes.                           |
 | Timer IP    | IP Address of the external timer.                                       |
 | Hue IP      | IP Address of Phillips Hue bridge.                                      |
-| Hue Room    | Name of the Room with the Hue Lights. Change it in the Phillips Hue App.|
+| Hue Room    | Name of the room with the Hue Lights. Change it in the Phillips Hue App.|
 | Hue Key     | API Key from a paired HUE. Pair the Hue to retrieve it.                 |
 | Debug       | If selected, you can switch the screens by <kbd>Space</kbd> or touch.   |
 |  \* The _Bomb time_ can be also changed by the REST interface.                        | 
