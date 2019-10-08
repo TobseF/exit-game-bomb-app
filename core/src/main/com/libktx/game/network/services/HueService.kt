@@ -53,10 +53,10 @@ class HueService {
 
     private fun acquireNewApiKey(ipAddress: String): String? {
         log.info { "Initialize new API connection" }
-        val connectionBuiler = Hue.hueBridgeConnectionBuilder(ipAddress)
+        val connectionBuilder = Hue.hueBridgeConnectionBuilder(ipAddress)
         log.info { "Push the button on your Hue Bridge to resolve the apiKey future" }
         try {
-            return connectionBuiler.initializeApiConnection(Config.appIdentifier)
+            return connectionBuilder.initializeApiConnection(Config.appIdentifier)
         } catch (e: HueApiException) {
             log.error { "Failed connecting to bridge" }
             return null
@@ -76,11 +76,13 @@ class HueService {
     fun setLights(hueValue: Int, lightState: LightState, brightness: Int = HUE_MAX, transitionTime: Int = 8) {
         try {
             hue?.let { _ ->
-                val room = findRoom()
-                if (room == null) {
-                    log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
-                } else {
-                    setLights(hueValue, brightness, transitionTime, room, lightState)
+                KtxAsync.launch {
+                    val room = findRoom()
+                    if (room == null) {
+                        log.error { "Hue is connected but no room is present. Setting light $lightState to $hueValue was not possible." }
+                    } else {
+                        setLights(hueValue, brightness, transitionTime, room, lightState)
+                    }
                 }
             } ?: run {
                 log.error { "Hue is not connected. Setting light $lightState to $hueValue was not possible." }
@@ -90,37 +92,34 @@ class HueService {
         }
     }
 
-    private fun findRoom(): Room? {
+    private suspend fun findRoom(): Room? = withContext(executor) {
         val roomName = Preferences.hueRoomName ?: "Bomb"
         val roomByName = hue?.getRoomByName(roomName)
         if (roomByName == null) {
             val firstRoom = hue?.getRooms()?.firstOrNull()
             if (firstRoom != null) {
                 log.info { "Hue is connected but room '$roomName' is not present. Using first room: '${firstRoom.name}'" }
-                return firstRoom
+                firstRoom
             } else {
-                return null
+                null
             }
         } else {
-            return roomByName
+            roomByName
         }
     }
 
-    private fun setLights(hueValue: Int, brightness: Int = HUE_MAX, transitionTime: Int = 8, room: Room, state: LightState) {
-        KtxAsync.launch {
-            log.info { "Setting light $state to $hueValue." }
-            val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).transitionTime(transitionTime).let {
-                when (state) {
-                    LightState.ON -> it.on()
-                    LightState.OFF -> it.off()
-                }
+    private suspend fun setLights(hueValue: Int, brightness: Int = HUE_MAX, transitionTime: Int = 8, room: Room, state: LightState) {
+        log.info { "Setting light $state to $hueValue." }
+        val hueState = State.builder().hue(hueValue).saturation(HUE_MAX).brightness(brightness).transitionTime(transitionTime).let {
+            when (state) {
+                LightState.ON -> it.on()
+                LightState.OFF -> it.off()
             }
-            withContext(executor) {
-                room.setState(hueState)
-            }
+        }
+        withContext(executor) {
+            room.setState(hueState)
             log.info { "Finished setting light" }
         }
-
     }
 
 }
