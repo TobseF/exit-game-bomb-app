@@ -7,21 +7,18 @@ import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.scenes.scene2d.Stage
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable
 import com.badlogic.gdx.utils.Align
 import com.badlogic.gdx.utils.viewport.FitViewport
 import com.badlogic.gdx.utils.viewport.Viewport
-import com.kotcrab.vis.ui.VisUI
+import com.kotcrab.vis.ui.widget.VisCheckBox
+import com.kotcrab.vis.ui.widget.VisLabel
 import com.kotcrab.vis.ui.widget.VisProgressBar
 import com.kotcrab.vis.ui.widget.VisTextField
 import com.libktx.game.Config
 import com.libktx.game.Game
 import com.libktx.game.Preferences
-import com.libktx.game.lib.addValueChangeListener
-import com.libktx.game.lib.bind
-import com.libktx.game.lib.bindInt
+import com.libktx.game.lib.*
 import com.libktx.game.lib.sensor.ILightSensor
-import com.libktx.game.lib.setClickListener
 import com.libktx.game.network.Network
 import com.libktx.game.network.services.HueService
 import com.libktx.game.network.services.HueService.HueValue
@@ -63,6 +60,7 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
 
 
     private fun switchToNextScreen() {
+        Gdx.app.input.inputProcessor = null
         hide()
         game.setScreen<InactiveScreen>()
     }
@@ -107,12 +105,14 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             textField(Preferences.timerIp ?: "") {
                 bind(Preferences::timerIp)
             }.cell(grow = true)
+
             row()
 
             label("Hue IP:")
             textField(Preferences.hueIp ?: "") {
                 bind(Preferences::hueIp)
             }.cell(grow = true)
+
             row()
 
             label("Hue Room: ")
@@ -130,28 +130,25 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             val pairedCheckBox = checkBox("Paired") {
                 isDisabled = true
                 isChecked = hueService.isPaired()
-            }.cell(colspan = 1)
+            }
             checkBox("Debug") {
                 isChecked = Preferences.debug
                 setClickListener { Preferences.debug = isChecked }
-            }.cell(colspan = 1)
+            }
             checkBox("Ext. Timer") {
                 isChecked = Preferences.enableExternalTimer
                 setClickListener { Preferences.enableExternalTimer = isChecked }
-            }.cell(colspan = 1)
+            }
+
             row()
+
             textButton("Reset Hue") {
                 setClickListener { resetHueSettings() }
             }.cell(fill = true)
+
             row()
 
-            val white: Drawable = VisUI.getSkin().getDrawable("white")
-
-            val previewColor = image(drawable = white) {
-                height = 20f
-                width = 20f
-                color = Color.RED
-            }.cell(fill = true)
+            val previewColor = colorPreview(color = Color.RED).cell(fill = true)
             val previewColorValue = textField(HueValue.Green.hue.toString()) {
             }.cell(grow = true)
             slider(min = 0f, max = HueColor.COLOR_HUE_MAX) {
@@ -161,6 +158,7 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
                     previewColorValue.text = hue.toInt().toString()
                 }
             }.cell(grow = true)
+
             row()
 
             textButton("Test Light Red") {
@@ -172,22 +170,17 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             textButton("Test Light Off") {
                 setClickListener { hueService.setLights(HueValue.Red, OFF) }
             }.cell(fill = true)
+
             row()
 
             val buttonPair = textButton("Pair").cell(fill = true)
             val state = label("")
-
             buttonPair.setClickListener {
-                state.setText("Pairing ...")
-                pairedCheckBox.isChecked = hueService.pair()
-                val hueApiKey: String? = Preferences.hueApiKey
-                if (hueApiKey != null) {
-                    labelApiKey.text = hueApiKey
-                }
-                state.clear()
+                pairHue(state, pairedCheckBox, labelApiKey)
             }
 
             row()
+
             textButton("Start") {
                 setClickListener { switchToNextScreen() }
             }.cell(minWidth = 120f, minHeight = 45f, align = Align.right, colspan = 3)
@@ -198,11 +191,25 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
         stage.viewport.centerCamera()
     }
 
+    private fun pairHue(state: VisLabel, pairedCheckBox: VisCheckBox, labelApiKey: VisTextField) {
+        if (Preferences.hueIp == null) {
+            state.setText("No Hue IP specified")
+        } else {
+            state.setText("Pairing ...")
+            pairedCheckBox.isChecked = hueService.pair()
+            val hueApiKey: String? = Preferences.hueApiKey
+            if (hueApiKey != null) {
+                labelApiKey.text = hueApiKey
+            }
+            state.clear()
+        }
+    }
+
     class HueColor : Color(WHITE) {
         companion object {
             const val COLOR_HUE_MAX = 65280f
 
-            fun fromHue(hue: Float): Color? {
+            fun fromHue(hue: Float): Color {
                 val hueAsLibGDX = 360f * (hue / COLOR_HUE_MAX)
                 return HueColor().fromHsv(hueAsLibGDX, 1f, 1f)
             }

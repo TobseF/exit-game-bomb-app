@@ -67,6 +67,7 @@ object Preferences {
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Int) {
             preferences.putInteger(prefKey.name, value)
+            preferences.flush()
         }
     }
 
@@ -78,6 +79,7 @@ object Preferences {
 
         operator fun setValue(thisRef: Any?, property: KProperty<*>, value: Boolean) {
             preferences.putBoolean(prefKey.name, value)
+            preferences.flush()
         }
     }
 }

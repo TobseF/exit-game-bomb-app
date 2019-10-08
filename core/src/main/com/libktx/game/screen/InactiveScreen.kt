@@ -1,6 +1,7 @@
 package com.libktx.game.screen
 
 
+import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
@@ -111,6 +112,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
     }
 
     override fun show() {
+        Gdx.app.input.inputProcessor = null
         activeTimer.reset()
         hueService.setLights(HueValue.White, ON, 85)
         if(Preferences.enableExternalTimer){
