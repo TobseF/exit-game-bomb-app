@@ -6,15 +6,17 @@ import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Game
 import com.libktx.game.Preferences
 import com.libktx.game.assets.FontAssets
+import com.libktx.game.assets.ImageAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.TimeFormatter
 import com.libktx.game.lib.draw
-import com.libktx.game.lib.drawWithShadow
+import com.libktx.game.lib.rect
 import com.libktx.game.network.Endpoint
 import com.libktx.game.network.services.HueService
 import com.libktx.game.network.services.HueService.HueValue
@@ -43,12 +45,16 @@ class SuccessScreen(game: Game,
 
     override fun render(delta: Float) {
         super.render(delta)
-        clearScreen(Color.GREEN)
+
+        clearScreen(Color.LIGHT_GRAY)
+
+        shapeRenderer.use(Filled) {
+            it.rect(Color.GREEN, 109f, 329f, 583f, 107f)
+        }
         batch.use {
-            val counterFont = assets[FontAssets.CounterBig]
-            counterFont.drawWithShadow(it, Color.GREEN, Color.DARK_GRAY, "88:88", 85f, 340f)
-            counterFont.draw(it, Color.BLACK, getTimeAsString(), 85f, 340f)
-            assets[FontAssets.ConsolasBig].draw(it, Color.WHITE, "UNLOCKED", 298f, 95f)
+
+            it.draw(assets[ImageAssets.Solution], 109f, 23f)
+            assets[FontAssets.ConsolasBig].draw(it, Color.WHITE, "UNLOCKED", 298f, 393f)
         }
     }
 

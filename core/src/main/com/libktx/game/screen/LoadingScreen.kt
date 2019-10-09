@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Config
 import com.libktx.game.Game
 import com.libktx.game.assets.FontAssets
+import com.libktx.game.assets.ImageAssets
 import com.libktx.game.assets.SoundAssets
 import com.libktx.game.assets.load
 import com.libktx.game.lib.draw
@@ -34,6 +35,7 @@ class LoadingScreen(private val game: Game,
     override fun show() {
         SoundAssets.values().forEach { assets.load(it) }
         FontAssets.values().forEach { assets.load(it) }
+        ImageAssets.values().forEach { assets.load(it) }
         hueService.pair()
     }
 

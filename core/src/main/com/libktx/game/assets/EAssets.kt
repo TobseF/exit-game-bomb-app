@@ -2,6 +2,7 @@ package com.libktx.game.assets
 
 import com.badlogic.gdx.assets.AssetManager
 import com.badlogic.gdx.audio.Sound
+import com.badlogic.gdx.graphics.Texture
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import ktx.assets.Asset
 import ktx.assets.load
@@ -34,6 +35,16 @@ enum class FontAssets(override val file: String) : AssetReference {
 
 fun AssetManager.load(asset: FontAssets) = load<BitmapFont>(asset)
 operator fun AssetManager.get(asset: FontAssets) = getAsset<BitmapFont>(asset)
+
+// fonts
+enum class ImageAssets(override val file: String) : AssetReference {
+    Solution("solution.png");
+
+    override val folder = "images"
+}
+
+fun AssetManager.load(asset: ImageAssets) = load<Texture>(asset)
+operator fun AssetManager.get(asset: ImageAssets) = getAsset<Texture>(asset)
 
 // app icons
 enum class Icons(override val file: String) : AssetReference {
