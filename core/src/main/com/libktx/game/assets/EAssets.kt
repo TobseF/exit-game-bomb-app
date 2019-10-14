@@ -1,6 +1,7 @@
 package com.libktx.game.assets
 
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.audio.Sound
 import com.badlogic.gdx.graphics.g2d.BitmapFont
 import ktx.assets.Asset
@@ -10,7 +11,6 @@ import ktx.assets.load
 enum class SoundAssets(override val file: String) : AssetReference {
     MessageRight("correct_message.mp3"),
     MessageWrong("wrong_message.mp3"),
-    BombActivated("bomb_activated_voice.mp3"),
     BombDeactivated("bomb_deactivated.mp3"),
     BombExplosion("bomb_explosion.mp3");
 
@@ -20,6 +20,19 @@ enum class SoundAssets(override val file: String) : AssetReference {
 fun AssetManager.load(asset: SoundAssets) = load<Sound>(asset)
 operator fun AssetManager.get(asset: SoundAssets) = getAsset<Sound>(asset)
 
+
+// music
+enum class MusicAssets(override val file: String) : AssetReference {
+    /**
+     * This clips is longer than 5s, so we have to stream it as music.
+     */
+    BombActivated("bomb_activated_voice.mp3");
+
+    override val folder = "sounds"
+}
+
+fun AssetManager.load(asset: MusicAssets) = load<Music>(asset)
+operator fun AssetManager.get(asset: MusicAssets) = getAsset<Music>(asset)
 
 // fonts
 enum class FontAssets(override val file: String) : AssetReference {

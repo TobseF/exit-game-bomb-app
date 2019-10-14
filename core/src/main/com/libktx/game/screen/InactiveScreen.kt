@@ -3,6 +3,7 @@ package com.libktx.game.screen
 
 import com.badlogic.gdx.Gdx
 import com.badlogic.gdx.assets.AssetManager
+import com.badlogic.gdx.audio.Music
 import com.badlogic.gdx.graphics.Color
 import com.badlogic.gdx.graphics.OrthographicCamera
 import com.badlogic.gdx.graphics.g2d.Batch
@@ -10,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.libktx.game.Game
 import com.libktx.game.Preferences
-import com.libktx.game.assets.SoundAssets
+import com.libktx.game.assets.MusicAssets
 import com.libktx.game.assets.get
 import com.libktx.game.lib.Countdown
 import com.libktx.game.lib.draw
@@ -77,7 +78,7 @@ class InactiveScreen(private val lightSensor: ILightSensor? = null,
      * Play an alarm sound when the bomb gets activated by light. Changes the hue lights to red
      */
     private fun activateBomb() {
-        val sound = assets[SoundAssets.BombActivated]
+        val sound: Music = assets[MusicAssets.BombActivated]
         sound.play()
         blinkLights()
         if(Preferences.enableExternalTimer){
