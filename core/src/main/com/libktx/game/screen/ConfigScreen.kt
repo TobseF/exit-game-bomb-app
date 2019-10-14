@@ -17,6 +17,8 @@ import com.kotcrab.vis.ui.widget.VisTextField
 import com.libktx.game.Config
 import com.libktx.game.Game
 import com.libktx.game.Preferences
+import com.libktx.game.assets.MusicAssets
+import com.libktx.game.assets.get
 import com.libktx.game.lib.*
 import com.libktx.game.lib.sensor.ILightSensor
 import com.libktx.game.network.Network
@@ -177,6 +179,13 @@ class ConfigScreen(private val lightSensor: ILightSensor? = null,
             val state = label("")
             buttonPair.setClickListener {
                 pairHue(state, pairedCheckBox, labelApiKey)
+            }
+
+            textButton("Test Sound") {
+                cell(fill = true)
+                setClickListener {
+                    assets[MusicAssets.BombActivated].play()
+                }
             }
 
             row()

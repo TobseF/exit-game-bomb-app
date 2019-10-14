@@ -11,10 +11,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType.Filled
 import com.libktx.game.Config
 import com.libktx.game.Game
-import com.libktx.game.assets.FontAssets
-import com.libktx.game.assets.ImageAssets
-import com.libktx.game.assets.SoundAssets
-import com.libktx.game.assets.load
+import com.libktx.game.assets.*
 import com.libktx.game.lib.draw
 import com.libktx.game.network.Network
 import com.libktx.game.network.services.HueService
@@ -36,6 +33,7 @@ class LoadingScreen(private val game: Game,
         SoundAssets.values().forEach { assets.load(it) }
         FontAssets.values().forEach { assets.load(it) }
         ImageAssets.values().forEach { assets.load(it) }
+        MusicAssets.values().forEach { assets.load(it) }
         hueService.pair()
     }
 
