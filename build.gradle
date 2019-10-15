@@ -48,6 +48,7 @@ project(":desktop") {
 
     ext{
         undertowVersion = '2.0.1.Final'
+        jbossLoggingVesion = '3.4.1.Final'
     }
 
     dependencies {
@@ -58,6 +59,7 @@ project(":desktop") {
         api "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 
         api "io.undertow:undertow-core:$undertowVersion"
+        api("org.jboss.logging:jboss-logging:$jbossLoggingVesion")
     }
 }
 
