@@ -51,6 +51,8 @@ See `HueService` or [yetanotherhueapi](https://github.com/TobseF/yetanotherhueap
 ⏰ The bomb can connect to an external Arduino hardware based 7-segment countdown timer.   
   This optional project is available here: [Arduino-Countdown-Timer](https://github.com/TobseF/Arduino-Countdown-Timer/tree/master).
   See `TimerService` for interface details.
+  
+✉ As part of the game, a fake [Email Frontend - SecureMail](https://github.com/olegpeters/react-exitgame-email) is used. There the players have to hack into the inbox by using the "Forgot Password" option.
 
 ## ⌨ Controls
 Available if _debug_ switch is on:
