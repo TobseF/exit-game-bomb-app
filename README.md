@@ -10,8 +10,8 @@ The Bomb runs on an Android Device. It starts with a countdown before it explode
 It's not accessible for the players. Players have to deactivate the bomb with coding challenges.
 The deactivation commands are sent to an REST interface of the Bomb app.
 
-## [📚 Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/download/v0.0.1/Bomb.Instruction.Manual.pdf)
-The players read the [Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/download/v0.0.1/Bomb.Instruction.Manual.pdf) which helps
+## [📚 Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/download/v0.0.2/Bomb.Instruction.Manual.pdf)
+The players read the [Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/download/v0.0.2/Bomb.Instruction.Manual.pdf) which helps
 them to stop the bomb. Print it for them.
 
 ## 📡 Remote Control
