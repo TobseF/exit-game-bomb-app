@@ -3,15 +3,16 @@
 [![Kotlin](https://img.shields.io/badge/Kotlin-1.3.40-blue.svg?style=flat&logo=kotlin&logoColor=white)](http://kotlinlang.org)
 [![Kotlin-Coroutines](https://img.shields.io/badge/Kotlin--Coroutines-1.3.0--RC2-orange.svg)](https://kotlinlang.org/docs/reference/coroutines-overview.html)
 [![LibGDX](https://img.shields.io/badge/LibGDX-1.9.10-red.svg)](https://libgdx.badlogicgames.com/news.html)
- 
+
 This bomb is part of an **ExitGame** where payers have to deactivate a bomb by coding challenges.
 
 The Bomb runs on an Android Device. It starts with a countdown before it explodes.
 It's not accessible for the players. Players have to deactivate the bomb with coding challenges.
 The deactivation commands are sent to an REST interface of the Bomb app.
+### 📦 [Dowload](https://github.com/TobseF/its-exit-game-bomb/releases/latest/download/bomb-app.apk)
 
-## [📚 Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/download/v0.0.2/Bomb.Instruction.Manual.pdf)
-The players read the [Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/download/v0.0.2/Bomb.Instruction.Manual.pdf) which helps
+## [📚 Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/latest/download/Bomb.Instruction.Manual.pdf)
+The players read the [Bomb Instruction Manual](https://github.com/TobseF/its-exit-game-bomb/releases/latest/download/Bomb.Instruction.Manual.pdf) which helps
 them to stop the bomb. Print it for them.
 
 ## 📡 Remote Control
