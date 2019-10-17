@@ -17,7 +17,7 @@ them to stop the bomb. Print it for them.
 
 ## 📡 Remote Control
 The players solve the puzzle by trigger unit tests which access the bombs REST API. There are two projects which can control the bomb:
-1. **[Bomb-Client](https://github.com/TobseF/bomb-client).**  
+1. **[Bomb-Coding-Challenge](https://github.com/TobseF/exit-game-coding-challenge).**  
   The client code with empty unit tests and access the the puzzle endpoints. The players try to disable the bomb remotely with this tests.
 2. **[Bomb-Client-App](https://github.com/TobseF/bomb-client-app)**  
   The admin UI which can change settings of the bomb an check the bombs state. This is of course not available for the players.
