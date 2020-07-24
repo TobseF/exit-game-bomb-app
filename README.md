@@ -4,6 +4,10 @@
 [![Kotlin-Coroutines](https://img.shields.io/badge/Kotlin--Coroutines-1.3.0--RC2-orange.svg)](https://kotlinlang.org/docs/reference/coroutines-overview.html)
 [![LibGDX](https://img.shields.io/badge/LibGDX-1.9.10-red.svg)](https://libgdx.badlogicgames.com/news.html)
 
+
+![Bomb Photo](https://tobsef.github.io/exit-game-bomb-app/images/bomb_banner.jpg)
+
+
 This bomb is part of an **ExitGame** where payers have to deactivate a bomb by coding challenges.
 
 The Bomb runs on an Android Device. It starts with a countdown before it explodes.
