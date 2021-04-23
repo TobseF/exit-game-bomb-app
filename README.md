@@ -47,8 +47,8 @@ _IntelliJ > Settings > Build, Execution, Deployment > Build Tools > Gradle > Gra
 
 ## 💡 External Hardware
 💡 The comb can be paired with external Hardware. It connects to a Phillips Hue bridge and controls lights.
-So lights switch to ![RED](https://placehold.it/15/f03c15/000000?text=+) if the bomb gets activated and to 
-![GREEN](https://placehold.it/15/c5f015/000000?text=+) if it gets disarmed.
+So lights switch to 🟥[red] if the bomb gets activated and to 
+🟩[green] if it gets disarmed.
 See `HueService` or [yetanotherhueapi](https://github.com/TobseF/yetanotherhueapi) for details.
 
 🔊 To bomb also plays audio files, so it may be a good idea to connect it with an external Bluetooth speaker.
